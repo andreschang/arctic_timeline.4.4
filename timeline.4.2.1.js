@@ -149,7 +149,7 @@ miniTL.append("rect")
 
 // Load data and build timelines
 // d3.tsv("web_timeline4.2.tsv", function(items) {
-d3.tsv("https://rawgit.com/andreschang/arctic_timeline.4.2/master/web_timeline4.2.tsv", function(items) {
+d3.tsv("web_timeline4.2.tsv", function(items) {
 
   // lines
 
