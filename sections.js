@@ -86,10 +86,12 @@ var scrollVis = function () {
 
     // SLIDE 1
 
-    g.append('svg:image')
+    g.append('svg:a')
+      .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
+      .attr('xlink:show', 'new')
+      .append('svg:image')
       .attr('class', 'slide1 img')
-      .attr('id', 'shuvinai')
-      .attr("xlink:href", "shuvinai.jpg")
+      .attr('xlink:href', "shuvinai.jpg")
       .attr('x', 270)
       .attr('y', 90)
       .attr('width', '50%')
@@ -453,6 +455,14 @@ var scrollVis = function () {
       .transition()
       .duration(600)
       .style('opacity', 0.4);
+
+    // g.append('svg:a')
+    //   .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
+    //   .append('rect')
+    //   .attr('x', 270)
+    //   .attr('y', 90)
+    //   .attr('width', 50)
+    //   .attr('height', 50);
 
   }
 
