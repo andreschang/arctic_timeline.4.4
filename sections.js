@@ -131,6 +131,19 @@ var scrollVis = function () {
       .style('opacity', 0);
 
     // SLIDE 2
+
+    var xGisp = 400,
+      yGisp = 100;
+
+    g.append('svg:image')
+      .attr('class', 'slide2 img')
+      .attr('xlink:href', "gisp2_crop.jpg")
+      .attr('x', xGisp)
+      .attr('y', yGisp)
+      .attr('width', width-xGisp)
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
+
     g.append('text')
       .attr('class', 'title slide2')
       .attr('y', (height / 5))
@@ -149,6 +162,7 @@ var scrollVis = function () {
       .style('opacity', 0);
 
     // SLIDE 3
+
     g.append('text')
       .attr('class', 'title slide3')
       .attr('y', (height / 5))
@@ -457,6 +471,11 @@ var scrollVis = function () {
       .transition()
       .duration(0)
       .style('opacity', 0);
+  
+    g.selectAll(':not(.slide1)')
+       .attr('pointer-events', 'none');
+
+      // add pointer-events none for other slides
 
     g.selectAll('.slide1')
       .transition()
@@ -464,6 +483,7 @@ var scrollVis = function () {
       .style('opacity', 1.0);
 
     g.selectAll('.slide1').filter('.img')
+      .attr('pointer-events', 'all')
       .transition()
       .duration(600)
       .style('opacity', 0.4);
@@ -476,15 +496,25 @@ var scrollVis = function () {
       .duration(0)
       .style('opacity', 0);
 
+    g.selectAll('.slide3')
+      .transition()
+      .duration(0)
+      .style('opacity', 0);
+
+    g.selectAll(':not(.slide2)')
+      .attr('pointer-events', 'none');
+
     g.selectAll('.slide2')
       .transition()
       .duration(600)
       .style('opacity', 1.0);
 
-    g.selectAll('.slide3')
+    g.selectAll('.slide2').filter('.img')
+      .attr('pointer-events', 'all')
       .transition()
-      .duration(0)
-      .style('opacity', 0);
+      .duration(600)
+      .style('opacity', 0.4);
+
   }
 
   function show3() {
