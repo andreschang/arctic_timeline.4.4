@@ -786,7 +786,7 @@ function display(data) {
 }
 
 // load data and display
-// d3.tsv('web_timeline4.2.tsv', display);
-d3.tsv('https://rawgit.com/andreschang/arctic_timeline.4.2/master/web_timeline4.2.tsv', display);
+d3.tsv('web_timeline4.2.tsv', display);
+// d3.tsv('https://rawgit.com/andreschang/arctic_timeline.4.2/master/web_timeline4.2.tsv', display);
 
 
