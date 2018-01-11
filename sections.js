@@ -8,7 +8,7 @@
 var scrollVis = function () {
   // constants to define the size
   // and margins of the vis area.
-  var width = 500;
+  var width = 550;
   var height = 520;
   var margin = { top: 0, left: 20, bottom: 40, right: 10 };
 
@@ -86,16 +86,28 @@ var scrollVis = function () {
 
     // SLIDE 1
 
-    g.append('svg:a')
-      .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
-      .attr('xlink:show', 'new')
-      .append('svg:image')
+    // g.append('svg:a')
+    //   .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
+    //   .attr('xlink:show', 'new')
+    //   .append('svg:image')
+    //   .attr('class', 'slide1 img')
+    //   .attr('xlink:href', "shuvinai.jpg")
+    //   .attr('x', 270)
+    //   .attr('y', 90)
+    //   .attr('width', '50%')
+    //   .attr('height', '50%')
+    //   .on("mouseover", handleMouseOver)
+    //   .on("mouseout", handleMouseOut);
+
+    var xSh = 270,
+      ySh = 120;
+
+    g.append('svg:image')
       .attr('class', 'slide1 img')
       .attr('xlink:href', "shuvinai.jpg")
-      .attr('x', 270)
-      .attr('y', 90)
-      .attr('width', '50%')
-      .attr('height', '50%')
+      .attr('x', xSh)
+      .attr('y', ySh)
+      .attr('width', width-xSh)
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut);
 
@@ -455,14 +467,6 @@ var scrollVis = function () {
       .transition()
       .duration(600)
       .style('opacity', 0.4);
-
-    // g.append('svg:a')
-    //   .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
-    //   .append('rect')
-    //   .attr('x', 270)
-    //   .attr('y', 90)
-    //   .attr('width', 50)
-    //   .attr('height', 50);
 
   }
 

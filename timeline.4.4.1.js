@@ -240,7 +240,7 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
             d3.select(this)
               .transition()        
               .duration(200)      
-              .style("opacity", .8);}
+              .style("opacity", 1);}
   };
 
   function handleMouseOut(d, i) {

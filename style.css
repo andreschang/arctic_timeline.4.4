@@ -56,9 +56,6 @@
   text-anchor: left;
 }
 
-#vis .link {
-  opacity: 0;
-}
 
 .axis path,
 .axis line {
