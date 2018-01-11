@@ -144,7 +144,8 @@ miniTL.append("rect")
   .attr("x", 0.05*x2(1))
   .attr("width", function(d) {return .8*x2(1)})
   // height edited to match limit of miniBox slider
-  .attr("height", (miniHeight-16))
+  // .attr("height", (miniHeight-16))
+  .attr("height", (miniHeight))
   .attr("fill", "#edf1f2");
 
 // Load data and build timelines
@@ -228,7 +229,24 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
     .attr("opacity", .3)
     .attr();
 
-  d3.selectAll(".event0-1000000").filter(".miniEvent")
-    .attr("height", (86.8246-16));
+  // d3.selectAll(".event0-1000000").filter(".miniEvent")
+  //   .attr("height", (86.8246-16));
 
  })
+
+  // Add interactivity 
+  function handleMouseOver(d, i) {
+    if (d3.select(this).style("opacity") != 0) {
+            d3.select(this)
+              .transition()        
+              .duration(200)      
+              .style("opacity", .8);}
+  };
+
+  function handleMouseOut(d, i) {
+    if (d3.select(this).style("opacity") > 0.4) {
+            d3.select(this)
+              .transition()        
+              .duration(200)      
+              .style("opacity", .4);}
+  };

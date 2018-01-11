@@ -82,7 +82,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide0')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 1
 
@@ -93,7 +93,9 @@ var scrollVis = function () {
       .attr('x', 270)
       .attr('y', 90)
       .attr('width', '50%')
-      .attr('height', '50%');
+      .attr('height', '50%')
+      .on("mouseover", handleMouseOver)
+      .on("mouseout", handleMouseOut);
 
     g.append('text')
       .attr('class', 'title slide1')
@@ -110,9 +112,9 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide1')
-      .attr('opacity', 0);
+      .style('opacity', 0);
     g.selectAll('.slide1-img')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 2
     g.append('text')
@@ -130,7 +132,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide2')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 3
     g.append('text')
@@ -148,7 +150,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide3')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 4
     g.append('text')
@@ -166,7 +168,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide4')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 5
     g.append('text')
@@ -184,7 +186,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide5')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 6
     g.append('text')
@@ -202,7 +204,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide6')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 7
     g.append('text')
@@ -220,7 +222,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide7')
-      .attr('opacity', 0);
+      .style('opacity', 0);
   
     // SLIDE 8
     g.append('text')
@@ -238,7 +240,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide8')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 9
     g.append('text')
@@ -256,7 +258,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide9')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 10
     g.append('text')
@@ -274,7 +276,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide10')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 11
     g.append('text')
@@ -292,7 +294,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide11')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 12
     g.append('text')
@@ -310,7 +312,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide12')
-      .attr('opacity', 0);
+      .style('opacity', 0);
   
     // SLIDE 13
     g.append('text')
@@ -328,7 +330,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide13')
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     // SLIDE 14
     g.append('text')
@@ -346,7 +348,7 @@ var scrollVis = function () {
       .call(wrap, 500);
 
     g.selectAll('.slide14')
-      .attr('opacity', 0);
+      .style('opacity', 0);
     };
 
   var setupSections = function () {
@@ -423,36 +425,34 @@ var scrollVis = function () {
     g.selectAll('.slide1')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide0')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
   }
 
   function show1() {
     g.selectAll('.slide0')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide2')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide1')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide1').filter('.img')
       .transition()
       .duration(600)
-      .attr('opacity', 0.4);
-      // .on("mouseover", handleMouseOver)
-      // .on("mouseout", handleMouseOut);
+      .style('opacity', 0.4);
 
   }
 
@@ -460,68 +460,68 @@ var scrollVis = function () {
     g.selectAll('.slide1')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide2')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide3')
       .transition()
-      .duration(600)
-      .attr('opacity', 0);
+      .duration(0)
+      .style('opacity', 0);
   }
 
   function show3() {
     g.selectAll('.slide2')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide3')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide4')
       .transition()
-      .duration(600)
-      .attr('opacity', 0);
+      .duration(0)
+      .style('opacity', 0);
   }
 
   function show4() {
     g.selectAll('.slide3')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide4')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide5')
       .transition()
-      .duration(600)
-      .attr('opacity', 0);
+      .duration(0)
+      .style('opacity', 0);
   }
 
   function show5() {
     g.selectAll('.slide4')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide5')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide6')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -529,17 +529,17 @@ var scrollVis = function () {
     g.selectAll('.slide5')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide6')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide7')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -547,17 +547,17 @@ var scrollVis = function () {
     g.selectAll('.slide6')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide7')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide8')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -565,17 +565,17 @@ var scrollVis = function () {
     g.selectAll('.slide7')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide8')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide9')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
     // d3.select('#miniBox')
     //   .attr('height', 20);
@@ -586,17 +586,17 @@ var scrollVis = function () {
     g.selectAll('.slide8')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide9')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide10')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -604,17 +604,17 @@ var scrollVis = function () {
     g.selectAll('.slide9')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide10')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide11')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -622,17 +622,17 @@ var scrollVis = function () {
     g.selectAll('.slide10')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide11')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide12')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -640,17 +640,17 @@ var scrollVis = function () {
     g.selectAll('.slide11')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide12')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide13')
       .transition()
-      .duration(600)
-      .attr('opacity', 0.0);
+      .duration(0)
+      .style('opacity', 0.0);
 
   }
 
@@ -658,17 +658,17 @@ var scrollVis = function () {
     g.selectAll('.slide12')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide13')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
     g.selectAll('.slide14')
       .transition()
-      .duration(600)
-      .attr('opacity', 0);
+      .duration(0)
+      .style('opacity', 0);
 
   }
 
@@ -676,31 +676,34 @@ function show14() {
     g.selectAll('.slide13')
       .transition()
       .duration(0)
-      .attr('opacity', 0);
+      .style('opacity', 0);
 
     g.selectAll('.slide14')
       .transition()
       .duration(600)
-      .attr('opacity', 1.0);
+      .style('opacity', 1.0);
 
   }
 
 // Add interactivity 
-function handleMouseOver(d, i) {
-  var selectID = this.getAttribute('id');
-  d3.select("#"+selectID)
-    .transition()
-    .duration(200)
-    .style("opacity", 1.0);
-};
+// function handleMouseOver(d, i) {
+//   // var selectID = this.getAttribute('id');
+//   // console.log('#'+selectID)
+//   // d3.select("#"+selectID)
+//   //   .transition()
+//   //   .duration(200)
+//   //   .style("opacity", 1.0);
+//   d3.select(this)
+//     .style("opacity", 1.0);
+// };
 
-function handleMouseOut(d, i) {
-  var selectID = this.getAttribute('id');
-  d3.select("#"+selectID)
-    .transition()
-    .duration(200)
-    .style("opacity", 0.4);
-};
+// function handleMouseOut(d, i) {
+//   var selectID = this.getAttribute('id');
+//   d3.select("#"+selectID)
+//     .transition()
+//     .duration(200)
+//     .style("opacity", 0.4);
+// };
 
 
   /**
