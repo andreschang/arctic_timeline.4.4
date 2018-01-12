@@ -33,7 +33,7 @@ var scrollVis = function () {
    *  example, we will be drawing it in #vis
    */
   var chart = function (selection) {
-    selection.each(function (rawData) {
+    selection.each(function (timelineData) {
       // create svg and give it a width and height
       svg = d3.select(this).selectAll('svg').data([timelineData]);
       var svgE = svg.enter().append('svg');
@@ -50,11 +50,9 @@ var scrollVis = function () {
       g = svg.select('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      // perform some preprocessing on raw data
-      var timelineData = getEvents(rawData);
-      d3.tsv("web_timeline4.2.tsv", setupVis);
-
+      setupVis(timelineData)
       setupSections();
+
     });
   };
 
@@ -512,18 +510,6 @@ function show14() {
    * formats we need to visualize
    *
    */
-
-  function getEvents(rawData) {
-    return rawData.map(function (d,i) {
-      d.id = d.id;
-      d.lane = d.lane;
-      d.start = d.start;
-      d.end = (d.end === '') ? 10 : d.end;
-      d.desc = d.desc;
-      return d;
-    });
-  }
-
 
   chart.activate = function (index) {
     activeIndex = index;
