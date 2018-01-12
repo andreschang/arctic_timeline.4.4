@@ -105,35 +105,43 @@ var scrollVis = function () {
       .style('opacity', 0);
     };
 
-  var setupSections = function () {
-    // activateFunctions are called each
-    // time the active section changes
-    activateFunctions[0] = show0;
-    activateFunctions[1] = show1;
-    activateFunctions[2] = show2;
-    activateFunctions[3] = show3;
-    activateFunctions[4] = show4;
-    activateFunctions[5] = show5;
-    activateFunctions[6] = show6;
-    activateFunctions[7] = show7;
-    activateFunctions[8] = show8;
-    activateFunctions[9] = show9;
-    activateFunctions[10] = show10;
-    activateFunctions[11] = show11;
-    activateFunctions[12] = show12;
-    activateFunctions[13] = show13;
-    activateFunctions[14] = show14;
+  var setupSections = function() {
 
-    // updateFunctions are called while
-    // in a particular section to update
-    // the scroll progress in that section.
-    // Most sections do not need to be updated
-    // for all scrolling and so are set to
-    // no-op functions.
-    // for (var i = 0; i < 9; i++) {
-    //   updateFunctions[i] = function () {};
-    // }
+    for (var i = 0; i < 15; ++i){
+
+      activateFunctions[i] = getFun(i);};
+
+    function getFun(val) {
+        var xb = val-1,
+          xf = val+1;
+
+        return function() {
+        g.selectAll('.slide'+xb)
+          .transition()
+          .duration(0)
+          .style('opacity', 0);
+
+        g.selectAll('.slide'+xf)
+          .transition()
+          .duration(0)
+          .style('opacity', 0);
+
+        g.selectAll(':not(.slide'+val+')')
+          .attr('pointer-events', 'none');
+
+        g.selectAll('.slide'+val)
+          .transition()
+          .duration(600)
+          .style('opacity', 1.0);
+
+        g.selectAll('.slide'+val).filter('.img')
+          .attr('pointer-events', 'all')
+          .transition()
+          .duration(600)
+          .style('opacity', 0.4);};
+      };
   };
+
 
   var wrap = function(text, width) {
   text.each(function() {
@@ -159,349 +167,6 @@ var scrollVis = function () {
     }
   });
 }
-
-  /**
-   * ACTIVATE FUNCTIONS
-   *
-   * These will be called their
-   * section is scrolled to.
-   *
-   * General pattern is to ensure
-   * all content for the current section
-   * is transitioned in, while hiding
-   * the content for the previous section
-   * as well as the next section (as the
-   * user may be scrolling up or down).
-   *
-   */
-
-  function show0() {
-    g.selectAll('.slide1')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide0')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-  }
-
-  function show1() {
-    g.selectAll('.slide0')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide2')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-  
-    g.selectAll(':not(.slide1)')
-       .attr('pointer-events', 'none');
-
-      // add pointer-events none for other slides
-
-    g.selectAll('.slide1')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide1').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-
-  }
-
-  function show2() {
-    g.selectAll('.slide1')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide3')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide2)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide2')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide2').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-
-  }
-
-  function show3() {
-    g.selectAll('.slide2')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide4')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide3)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide3')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide3').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-  }
-
-  function show4() {
-    g.selectAll('.slide3')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide5')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide4)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide4')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-  }
-
-  function show5() {
-    g.selectAll('.slide4')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide6')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide5)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide5')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide5').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-  }
-
-  function show6() {
-    g.selectAll('.slide5')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide7')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide5)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide6')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-  }
-
-  function show7() {
-    g.selectAll('.slide6')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide8')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide7)')
-      .attr('pointer-events', 'none');  
-
-    g.selectAll('.slide7')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide7').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-  }
-
-  function show8() {
-    g.selectAll('.slide7')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide9')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide8)')
-      .attr('pointer-events', 'none');  
-
-    g.selectAll('.slide8')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-  }
-
-  function show9() {
-    g.selectAll('.slide8')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide10')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide9)')
-      .attr('pointer-events', 'none');  
-
-    g.selectAll('.slide9')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide9').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-  }
-
-  function show10() {
-    g.selectAll('.slide9')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide11')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide10)')
-      .attr('pointer-events', 'none');  
-
-    g.selectAll('.slide10')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-  }
-
-  function show11() {
-    g.selectAll('.slide10')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide12')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    // g.selectAll(':not(.slide11)')
-    //   .attr('pointer-events', 'none');  
-
-    g.selectAll('.slide11')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide11').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-  }
-
-  function show12() {
-    g.selectAll('.slide11')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide12')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide13')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show13() {
-    g.selectAll('.slide12')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide13')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide14')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-  }
-
-function show14() {
-    g.selectAll('.slide13')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide14')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-  }
 
   /**
    * DATA FUNCTIONS
