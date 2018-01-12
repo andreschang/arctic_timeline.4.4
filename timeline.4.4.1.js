@@ -224,7 +224,7 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
   miniTL.append("rect")
     .attr("id", "miniBox")
     .attr("width", function(d) {return .9*x2(1)})
-    .attr("height", 10)
+    .attr("height", 8)
     .attr("fill", "purple")
     .attr("opacity", .3)
     .attr();
