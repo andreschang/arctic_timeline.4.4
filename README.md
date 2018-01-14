@@ -1,6 +1,6 @@
 # Arctic Timeline
 
-Interactive timeline of Arctic history for the [Climate Museum](http://climatemuseum.org)'s first exhibition, [*In Human Time*](http://inhumantime.org). The timeline focuses on three kinds of events in Arctic history, which are frequently overlapping: earth science, human exploration, and culture (art and writing). The timeline is written using D3v4 and makes use of scroller code by (Jim Vallandingham)[https://github.com/vlandham/scroll_demo].
+Interactive timeline of Arctic history for the [Climate Museum](http://climatemuseum.org)'s first exhibition, [*In Human Time*](http://inhumantime.org). The timeline focuses on three (occasionally overlapping) categories of Arctic events: earth science, human exploration, and culture (art and writing). The timeline is written using D3v4 and makes use of scroller code by (Jim Vallandingham)[https://github.com/vlandham/scroll_demo].
 
 ## Authors
 
