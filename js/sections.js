@@ -74,7 +74,7 @@ var scrollVis = function () {
       .enter()
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
-      .attr('xlink:href', function(d,i) {return img_names[i]+'.jpg'})
+      .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
       .attr('x', function(d,i) {return img_x[i]})
       .attr('y', function(d,i) {return img_y[i]})
       .attr('width', function(d,i) {return (width-img_x[i])})
