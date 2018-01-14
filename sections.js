@@ -23,7 +23,7 @@ var scrollVis = function () {
   var g = null;
 
   var activateFunctions = [];
-  var updateFunctions = [];
+  // var updateFunctions = [];
 
   /**
    * chart
@@ -33,7 +33,7 @@ var scrollVis = function () {
    *  example, we will be drawing it in #vis
    */
   var chart = function (selection) {
-    selection.each(function (rawData) {
+    selection.each(function (timelineData) {
       // create svg and give it a width and height
       svg = d3.select(this).selectAll('svg').data([timelineData]);
       var svgE = svg.enter().append('svg');
@@ -50,12 +50,9 @@ var scrollVis = function () {
       g = svg.select('g')
         .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
 
-      // perform some preprocessing on raw data
-      var timelineData = getEvents(rawData);
-
-      setupVis(timelineData);
-
+      setupVis(timelineData)
       setupSections();
+
     });
   };
 
@@ -66,348 +63,85 @@ var scrollVis = function () {
 
   var setupVis = function (timelineData) {
 
-    // SLIDE 0
-    g.append('text')
-      .attr('class', 'title slide0')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[0].id)
-      .call(wrap, 450);
+    var img_slides = [1,2,3,5,7,9,11],
+      img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
+      'bruegel', 'hyperborea'],
+      img_x = [270, 400, 340, 228, 370, 240, 240],
+      img_y = [120, 100, 120, 126, 50, 120, 120];
 
-    g.append('text')
-      .attr('class', 'desc slide0')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[0].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide0')
-      .style('opacity', 0);
-
-    // SLIDE 1
-
-    // g.append('svg:a')
-    //   .attr('xlink:href', 'https://feheleyfinearts.com/artists/shuvinai-ashoona/')
-    //   .attr('xlink:show', 'new')
-    //   .append('svg:image')
-    //   .attr('class', 'slide1 img')
-    //   .attr('xlink:href', "shuvinai.jpg")
-    //   .attr('x', 270)
-    //   .attr('y', 90)
-    //   .attr('width', '50%')
-    //   .attr('height', '50%')
-    //   .on("mouseover", handleMouseOver)
-    //   .on("mouseout", handleMouseOut);
-
-    var xSh = 270,
-      ySh = 120;
-
-    g.append('svg:image')
-      .attr('class', 'slide1 img')
-      .attr('xlink:href', "shuvinai.jpg")
-      .attr('x', xSh)
-      .attr('y', ySh)
-      .attr('width', width-xSh)
+    g.append('g').selectAll('img')
+      .data(img_slides)
+      .enter()
+      .append('svg:image')
+      .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
+      .attr('xlink:href', function(d,i) {return img_names[i]+'.jpg'})
+      .attr('x', function(d,i) {return img_x[i]})
+      .attr('y', function(d,i) {return img_y[i]})
+      .attr('width', function(d,i) {return (width-img_x[i])})
       .on("mouseover", handleMouseOver)
-      .on("mouseout", handleMouseOut);
-
-    g.append('text')
-      .attr('class', 'title slide1')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[1].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide1')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[1].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide1')
-      .style('opacity', 0);
-    g.selectAll('.slide1-img')
+      .on("mouseout", handleMouseOut)
       .style('opacity', 0);
 
-    // SLIDE 2
-
-    var xGisp = 400,
-      yGisp = 100;
-
-    g.append('svg:image')
-      .attr('class', 'slide2 img')
-      .attr('xlink:href', "gisp2_crop.jpg")
-      .attr('x', xGisp)
-      .attr('y', yGisp)
-      .attr('width', width-xGisp)
-      .on("mouseover", handleMouseOver)
-      .on("mouseout", handleMouseOut);
-
-    g.append('text')
-      .attr('class', 'title slide2')
-      .attr('y', (height / 5))
+    g.append('g').selectAll('title')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' title'})
+      .attr('y',  (height / 5))
       .attr('x', width / 3)
-      .text(timelineData[2].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide2')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[2].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide2')
+      .text(function(d) {return d.id})
+      .call(wrap, 450)
       .style('opacity', 0);
 
-    // SLIDE 3
-
-    g.append('text')
-      .attr('class', 'title slide3')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[3].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide3')
+    g.append('g').selectAll('desc')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' desc'})
+      .attr('y',  (height / 3) + (height / 5))
       .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[3].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide3')
-      .style('opacity', 0);
-
-    // SLIDE 4
-    g.append('text')
-      .attr('class', 'title slide4')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[4].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide4')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[4].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide4')
-      .style('opacity', 0);
-
-    // SLIDE 5
-    g.append('text')
-      .attr('class', 'title slide5')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[5].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide5')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[5].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide5')
-      .style('opacity', 0);
-
-    // SLIDE 6
-    g.append('text')
-      .attr('class', 'title slide6')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[6].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide6')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[6].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide6')
-      .style('opacity', 0);
-
-    // SLIDE 7
-    g.append('text')
-      .attr('class', 'title slide7')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[7].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide7')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[7].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide7')
-      .style('opacity', 0);
-  
-    // SLIDE 8
-    g.append('text')
-      .attr('class', 'title slide8')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[8].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide8')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[8].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide8')
-      .style('opacity', 0);
-
-    // SLIDE 9
-    g.append('text')
-      .attr('class', 'title slide9')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[9].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide9')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[9].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide9')
-      .style('opacity', 0);
-
-    // SLIDE 10
-    g.append('text')
-      .attr('class', 'title slide10')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[10].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide10')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[10].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide10')
-      .style('opacity', 0);
-
-    // SLIDE 11
-    g.append('text')
-      .attr('class', 'title slide11')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[11].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide11')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[11].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide11')
-      .style('opacity', 0);
-
-    // SLIDE 12
-    g.append('text')
-      .attr('class', 'title slide12')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[12].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide12')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[12].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide12')
-      .style('opacity', 0);
-  
-    // SLIDE 13
-    g.append('text')
-      .attr('class', 'title slide13')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[13].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide13')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[13].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide13')
-      .style('opacity', 0);
-
-    // SLIDE 14
-    g.append('text')
-      .attr('class', 'title slide14')
-      .attr('y', (height / 5))
-      .attr('x', width / 3)
-      .text(timelineData[14].id)
-      .call(wrap, 450);
-
-    g.append('text')
-      .attr('class', 'desc slide14')
-      .attr('x', width / 5)
-      .attr('y', (height / 3) + (height / 5))
-      .text(timelineData[14].desc)
-      .call(wrap, 500);
-
-    g.selectAll('.slide14')
+      .text(function(d) {return d.desc})
+      .call(wrap, 500)
       .style('opacity', 0);
     };
 
-  var setupSections = function () {
-    // activateFunctions are called each
-    // time the active section changes
-    activateFunctions[0] = show0;
-    activateFunctions[1] = show1;
-    activateFunctions[2] = show2;
-    activateFunctions[3] = show3;
-    activateFunctions[4] = show4;
-    activateFunctions[5] = show5;
-    activateFunctions[6] = show6;
-    activateFunctions[7] = show7;
-    activateFunctions[8] = show8;
-    activateFunctions[9] = show9;
-    activateFunctions[10] = show10;
-    activateFunctions[11] = show11;
-    activateFunctions[12] = show12;
-    activateFunctions[13] = show13;
-    activateFunctions[14] = show14;
+  var setupSections = function() {
 
-    // updateFunctions are called while
-    // in a particular section to update
-    // the scroll progress in that section.
-    // Most sections do not need to be updated
-    // for all scrolling and so are set to
-    // no-op functions.
-    for (var i = 0; i < 9; i++) {
-      updateFunctions[i] = function () {};
-    }
+    for (var i = 0; i < 15; ++i){
+
+      activateFunctions[i] = getFun(i);};
+
+    function getFun(val) {
+        var xb = val-1,
+          xf = val+1;
+
+        return function() {
+        g.selectAll('.slide'+xb)
+          .transition()
+          .duration(0)
+          .style('opacity', 0);
+
+        g.selectAll('.slide'+xf)
+          .transition()
+          .duration(0)
+          .style('opacity', 0);
+
+        g.selectAll(':not(.slide'+val+')')
+          .attr('pointer-events', 'none');
+
+        g.selectAll('.slide'+val)
+          .transition()
+          .duration(600)
+          .style('opacity', 1.0);
+
+        g.selectAll('.slide'+val).filter('.img')
+          .attr('pointer-events', 'all')
+          .transition()
+          .duration(600)
+          .style('opacity', 0.4);};
+      };
   };
+
 
   var wrap = function(text, width) {
   text.each(function() {
@@ -435,322 +169,6 @@ var scrollVis = function () {
 }
 
   /**
-   * ACTIVATE FUNCTIONS
-   *
-   * These will be called their
-   * section is scrolled to.
-   *
-   * General pattern is to ensure
-   * all content for the current section
-   * is transitioned in, while hiding
-   * the content for the previous section
-   * as well as the next section (as the
-   * user may be scrolling up or down).
-   *
-   */
-
-  function show0() {
-    g.selectAll('.slide1')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide0')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-  }
-
-  function show1() {
-    g.selectAll('.slide0')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide2')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-  
-    g.selectAll(':not(.slide1)')
-       .attr('pointer-events', 'none');
-
-      // add pointer-events none for other slides
-
-    g.selectAll('.slide1')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide1').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-
-  }
-
-  function show2() {
-    g.selectAll('.slide1')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide3')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll(':not(.slide2)')
-      .attr('pointer-events', 'none');
-
-    g.selectAll('.slide2')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide2').filter('.img')
-      .attr('pointer-events', 'all')
-      .transition()
-      .duration(600)
-      .style('opacity', 0.4);
-
-  }
-
-  function show3() {
-    g.selectAll('.slide2')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide3')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide4')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-  }
-
-  function show4() {
-    g.selectAll('.slide3')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide4')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide5')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-  }
-
-  function show5() {
-    g.selectAll('.slide4')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide5')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide6')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show6() {
-    g.selectAll('.slide5')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide6')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide7')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show7() {
-    g.selectAll('.slide6')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide7')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide8')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show8() {
-    g.selectAll('.slide7')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide8')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide9')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-    // d3.select('#miniBox')
-    //   .attr('height', 20);
-
-  }
-
-  function show9() {
-    g.selectAll('.slide8')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide9')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide10')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show10() {
-    g.selectAll('.slide9')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide10')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide11')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show11() {
-    g.selectAll('.slide10')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide11')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide12')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show12() {
-    g.selectAll('.slide11')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide12')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide13')
-      .transition()
-      .duration(0)
-      .style('opacity', 0.0);
-
-  }
-
-  function show13() {
-    g.selectAll('.slide12')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide13')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-    g.selectAll('.slide14')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-  }
-
-function show14() {
-    g.selectAll('.slide13')
-      .transition()
-      .duration(0)
-      .style('opacity', 0);
-
-    g.selectAll('.slide14')
-      .transition()
-      .duration(600)
-      .style('opacity', 1.0);
-
-  }
-
-// Add interactivity 
-// function handleMouseOver(d, i) {
-//   // var selectID = this.getAttribute('id');
-//   // console.log('#'+selectID)
-//   // d3.select("#"+selectID)
-//   //   .transition()
-//   //   .duration(200)
-//   //   .style("opacity", 1.0);
-//   d3.select(this)
-//     .style("opacity", 1.0);
-// };
-
-// function handleMouseOut(d, i) {
-//   var selectID = this.getAttribute('id');
-//   d3.select("#"+selectID)
-//     .transition()
-//     .duration(200)
-//     .style("opacity", 0.4);
-// };
-
-
-  /**
    * DATA FUNCTIONS
    *
    * Used to coerce the data into the
@@ -758,23 +176,12 @@ function show14() {
    *
    */
 
-  function getEvents(rawData) {
-    return rawData.map(function (d,i) {
-      d.lane = d.lane;
-      d.start = d.start;
-      d.end = (d.end === '') ? 10 : d.end;
-      d.desc = d.desc;
-      return d;
-    });
-  }
-
-
   chart.activate = function (index) {
     activeIndex = index;
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
     scrolledSections.forEach(function (i) {
-      activateFunctions[i]();
+      activateFunctions[i](); console.log(i);
     });
     lastIndex = activeIndex;
   };
@@ -785,9 +192,9 @@ function show14() {
    * @param index
    * @param progress
    */
-  chart.update = function (index, progress) {
-    updateFunctions[index](progress);
-  };
+  // chart.update = function (index, progress) {
+  //   updateFunctions[index](progress);
+  // };
 
   // return chart function
   return chart;
@@ -827,9 +234,9 @@ function display(data) {
     plot.activate(index);
   });
 
-  scroll.on('progress', function (index, progress) {
-    plot.update(index, progress);
-  });
+  // scroll.on('progress', function (index, progress) {
+  //   plot.update(index, progress);
+  // });
 }
 
 // load data and display
