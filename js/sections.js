@@ -87,8 +87,8 @@ var scrollVis = function () {
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' eventYear'})
-      .attr('y', (height / 10.8))
-      .attr('x', 6)
+      .attr('y', (height / 7))
+      .attr('x', 20)
       .text(function(d) { var showYear = d.start >= 0 ? d.start : -d.start+' BC';
         return( showYear );})
       .style('opacity', 0);
