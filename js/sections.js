@@ -82,6 +82,17 @@ var scrollVis = function () {
       .on("mouseout", handleMouseOut)
       .style('opacity', 0);
 
+    g.append('g').selectAll('eventYear')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' eventYear'})
+      .attr('y', (height / 10.8))
+      .attr('x', 6)
+      .text(function(d) { var showYear = d.start >= 0 ? d.start : -d.start+' BC';
+        return( showYear );})
+      .style('opacity', 0);
+
     g.append('g').selectAll('title')
       .data(timelineData)
       .enter()
