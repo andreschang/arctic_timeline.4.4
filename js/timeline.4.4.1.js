@@ -30,7 +30,7 @@ var mTop = 50,
   mainHeight = 6000 - mTop-m,
   miniHeight = 500 - mTop-m,
   miniWidth = 100 - 2*m,
-  mainWidth = 350 - miniWidth;
+  mainWidth = 300 - miniWidth;
 
 // Calculate ranges for shifting scale timeline
 nUnits.splice(0,0,0);
