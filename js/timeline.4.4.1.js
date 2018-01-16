@@ -27,10 +27,11 @@ tf.splice(5,0,-1000000)
 // Placement
 var mTop = 50,
   m = 15,
+  mLeft = 25,
   mainHeight = 6000 - mTop-m,
   miniHeight = 500 - mTop-m,
   miniWidth = 80 - 2*m,
-  mainWidth = 240 - miniWidth;
+  mainWidth = 220 - miniWidth;
 
 // Calculate ranges for shifting scale timeline
 nUnits.splice(0,0,0);
@@ -79,7 +80,7 @@ function boxMultiScale(inputNumber) {
         return y2(scale2.invert(inputNumber));
       } else if (bounds[3] <= inputNumber && inputNumber < bounds[4]) {
         return y2(scale3.invert(inputNumber));
-      } else if (inputNumber < bounds[5]) {
+      } else if (inputNumber >= bounds[4]) {
         return y2(scale4.invert(inputNumber));
       };
 };
@@ -97,7 +98,7 @@ var mainTL = d3.select("#sections")
   .attr("width", mainWidth+miniWidth)
   .attr("height", mainHeight+mTop+m)
   .append("g")
-  .attr("transform", "translate(" + (miniWidth) + "," + mTop + ")") // position mainTL
+  .attr("transform", "translate(" + (miniWidth+m) + "," + mTop + ")") // position mainTL
   .attr("height", mainHeight)
   .attr("width", mainWidth);
 
@@ -136,7 +137,7 @@ var miniTL = d3.select("#miniTL")
   .attr("width", miniWidth+2*m)
   .attr("height", miniHeight+mTop+m)
   .append("g")
-  .attr("transform", "translate(" + m + "," + mTop + ")") // position miniTL
+  .attr("transform", "translate(" + mLeft + "," + mTop + ")") // position miniTL
   .attr("height", miniHeight)
   .attr("width", miniWidth);
 
@@ -164,6 +165,11 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
     .attr("x", .12*x1(1))
     .attr("width", function(d) {return .8*x1(1)})
     .attr("height", function(d) {return multiScale(d.start, tf, t0, scaleDom)-multiScale(d.end, tf, t0, scaleDom)});
+
+  // Remove event marker for title slide
+  mainTL.selectAll('.mainEvent').filter('.event02018')
+    .classed('event0', false)
+    .attr('fill', 'none');
 
   // append y-axes
   mainTL.append("g")
@@ -221,11 +227,16 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
     .attr("width", function(d) {return .8*x2(1)})
     .attr("height", function(d) {return y2(d.start)-y2(d.end)});
 
-  miniTL.append("rect")
+  var miniLocator = miniTL.append("g")
+    .attr("id", "miniLocator")
+    .attr("width", miniHeight+2*m)
+    .attr("height", 10);
+
+  miniLocator.append("rect")
     .attr("id", "miniBox")
     .attr("width", function(d) {return .9*x2(1)})
     .attr("height", 8)
-    .attr("fill", "purple")
+    .attr("fill", "red")
     .attr("opacity", .3)
     .attr();
 

@@ -1,6 +1,6 @@
 
 .container {
-  width: 800;
+  width: 720;
 }
 
 #graphic {
@@ -19,7 +19,7 @@
 #sections {
   position: relative;
   display: inline-block;
-  width: 240px;
+  width: 220px;
   top: 0px;
   z-index: 90;
   padding-bottom: 200px;
@@ -45,19 +45,20 @@
 
 #vis .eventYear {
   font-size:2.2em;
-  fill: #dbdbdb;
+  fill: red;
   text-anchor: left;
 }
 
 #vis .title {
   font-size:3.5em;
+  font-weight: 500;
   /*text-anchor: middle;*/
 }
 
 #vis .desc {
   font-size:1.15em;
+  /*font-weight: 300;*/
   line-height: 1.4em;
-  font-weight:lighter;
   text-anchor: left;
 }
 
@@ -66,11 +67,6 @@
   fill: none;
   stroke: #666;
   shape-rendering: crispEdges;
-}
-
-.highlight {
-  fill: #008080;
-  font-weight: bold;
 }
 
 .event0 {
