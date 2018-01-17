@@ -1,6 +1,6 @@
 
 .container {
-  width: 720;
+  width: 800;
 }
 
 #graphic {
@@ -44,7 +44,7 @@
 }
 
 #vis .eventYear {
-  font-size:2.2em;
+  font-size:2em;
   fill: red;
   text-anchor: left;
 }

@@ -85,6 +85,20 @@ function boxMultiScale(inputNumber) {
       };
 };
 
+function yearMultiScale(inputNumber) {
+      if (bounds[0] <= inputNumber && inputNumber <= bounds[1]) {
+        return scale0.invert(inputNumber);
+      } else if (bounds[1] <= inputNumber && inputNumber < bounds[2]) {
+        return scale1.invert(inputNumber);
+      } else if (bounds[2] <= inputNumber && inputNumber < bounds[3]) {
+        return scale2.invert(inputNumber);
+      } else if (bounds[3] <= inputNumber && inputNumber < bounds[4]) {
+        return scale3.invert(inputNumber);
+      } else if (inputNumber >= bounds[4]) {
+        return scale4.invert(inputNumber);
+      };
+};
+
 // }
 
 function getSum(total, num) {
@@ -128,8 +142,6 @@ var axis4 = d3.axisLeft(scale4)
 // var axis1m = d3.axisLeft(scale1)
 //   .ticks(200, "f");
 
-// var yAxis = d3.axisLeft(y1);
-
 // BUILD MINI TL
 // mini timeline
 var miniTL = d3.select("#miniTL")
@@ -150,7 +162,6 @@ miniTL.append("rect")
   .attr("fill", "#edf1f2");
 
 // Load data and build timelines
-// d3.tsv("web_timeline4.2.tsv", function(items) {
 d3.tsv("web_timeline4.2.tsv", function(items) {
 
   // lines
@@ -235,10 +246,13 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
   miniLocator.append("rect")
     .attr("id", "miniBox")
     .attr("width", function(d) {return .9*x2(1)})
-    .attr("height", 8)
+    .attr("height", 4)
     .attr("fill", "red")
     .attr("opacity", .3)
     .attr();
+
+  miniLocator.append("text")
+    .attr("id", "miniYear");
 
   // d3.selectAll(".event0-1000000").filter(".miniEvent")
   //   .attr("height", (86.8246-16));
