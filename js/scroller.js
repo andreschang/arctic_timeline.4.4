@@ -93,6 +93,7 @@ function scroller() {
    */
   function position() {
     var pos = window.pageYOffset - 5 - containerStart;
+    var yLoc = (pos > 0) ? pos : 0;
     var sectionIndex = d3.bisect(sectionPositions, pos);
     sectionIndex = Math.min(sections.size() - 1, sectionIndex);
     // console.log(containerStart);
@@ -100,8 +101,8 @@ function scroller() {
     // console.log(pos);
     // console.log(sectionIndex);
 
-    d3.select("#miniBox")
-      .attr("y", boxMultiScale((pos+5)));
+    d3.select("#miniLocator")
+      .attr("transform", "translate(0,"+boxMultiScale((yLoc+5))+")");
 
     if (currentIndex !== sectionIndex) {
       // @v4 you now `.call` the dispatch callback

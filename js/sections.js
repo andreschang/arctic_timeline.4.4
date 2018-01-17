@@ -8,9 +8,9 @@
 var scrollVis = function () {
   // constants to define the size
   // and margins of the vis area.
-  var width = 550;
+  var width = 500;
   var height = 520;
-  var margin = { top: 0, left: 20, bottom: 40, right: 10 };
+  var margin = { top: 0, left: 10, bottom: 40, right: 10 };
 
   var lastIndex = -1;
   var activeIndex = 0;
@@ -63,7 +63,7 @@ var scrollVis = function () {
 
   var setupVis = function (timelineData) {
 
-    var img_slides = [1,2,3,5,7,9,11],
+    var img_slides = [2,3,4,6,8,10,12],
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
       img_x = [270, 400, 340, 228, 370, 240, 240],
@@ -114,6 +114,11 @@ var scrollVis = function () {
       .text(function(d) {return d.desc})
       .call(wrap, 500)
       .style('opacity', 0);
+
+    // Remove year above title slide
+    g.selectAll('.slide0').filter('.eventYear').remove();
+    g.selectAll('.slide0').filter('.desc').attr('transform', 'translate(0,-80)');
+
     };
 
   var setupSections = function() {
@@ -145,7 +150,7 @@ var scrollVis = function () {
           .duration(600)
           .style('opacity', 1.0);
 
-        g.selectAll('.slide'+val).filter('.img')
+        g.selectAll('.slide'+val).filter('.img, .eventYear')
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
