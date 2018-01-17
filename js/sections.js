@@ -120,51 +120,53 @@ var scrollVis = function () {
     g.selectAll('.slide0').filter('.desc').attr('transform', 'translate(0,-80)');
 
     // Greenland plot
-    // var parseTime = d3.timeParse("%Y-%m-%d");
-    // var widthG = 180,
-    //   heightG = 100;
-    // var xG = d3.scaleTime()
-    //     .rangeRound([0, widthG]);
-    // var yG = d3.scaleLinear()
-    //     .rangeRound([heightG, 0]);
+    var parseTime = d3.timeParse("%Y-%m-%d");
+    var widthG = 500,
+      heightG = 400;
+    var xG = d3.scaleTime()
+        .rangeRound([0, widthG]);
+    var yG = d3.scaleLinear()
+        .rangeRound([heightG, 0]);
 
-    // var line = d3.line()
-    //   .x(function(d) { return xG(d.date); })
-    //   .y(function(d) { return yG(d.mass); });
+    var line = d3.line()
+      .x(function(d) { return xG(d.date); })
+      .y(function(d) { return yG(d.mass); });
 
-    // d3.csv('greenland_mass_date.csv', function(d){
-    //   d.date = parseTime(d.date);
-    //   d.mass = +d.mass;
-    //   return d;
-    //   }, function(error, data) {
-    //     if (error) throw error;
+    d3.csv('greenland_mass_date.csv', function(d){
+      d.date = parseTime(d.date);
+      d.mass = +d.mass;
+      return d;
+      }, function(error, data) {
+        if (error) throw error;
 
-    //     xG.domain(d3.extent(data, function(d) { return d.date; }));
-    //     yG.domain(d3.extent(data, function(d) { return d.mass; }));
+        xG.domain(d3.extent(data, function(d) { return d.date; }));
+        yG.domain(d3.extent(data, function(d) { return d.mass; }));
 
-    //     greenlandPlot = g.append("g")
-    //       .attr("transform", "translate(300,190)")
-    //       .attr("class", "slide1")
+        greenlandPlot = g.append("g")
+          .attr("transform", "translate("+(width-widthG)+","+(height-heightG-80)+")")
+          .attr("class", "slide1 slide2");
 
-    //     greenlandPlot.call(d3.axisBottom(xG))
-    //       .select(".domain")
-    //       .remove();
+        greenlandPlot.call(d3.axisBottom(xG))
+          .selectAll(".domain")
+          .remove();
 
-    //     greenlandPlot.append("g")
-    //       .call(d3.axisLeft(yG))
-    //       .append('text')
-    //       .text('Ice mass anomaly (Gigatonnes)')
+        greenlandPlot.append("g")
+          .call(d3.axisLeft(yG))
+          .selectAll(".domain")
+          .remove()
+          // .append('text')
+          // .text('Ice mass anomaly (Gigatonnes)');
 
-    //     greenlandPlot.append("path")
-    //       .datum(data)
-    //       .attr("fill", "none")
-    //       .attr("stroke", "steelblue")
-    //       .attr("stroke-linejoin", "round")
-    //       .attr("stroke-linecap", "round")
-    //       .attr("stroke-width", 2)
-    //       .attr("d", line);
+        greenlandPlot.append("path")
+          .datum(data)
+          .attr("fill", "none")
+          .attr("stroke", "steelblue")
+          .attr("stroke-linejoin", "round")
+          .attr("stroke-linecap", "round")
+          .attr("stroke-width", 2)
+          .attr("d", line);
 
-      // });
+      });
 
     };
 
