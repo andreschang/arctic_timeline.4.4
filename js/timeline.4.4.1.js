@@ -235,7 +235,7 @@ d3.tsv("web_timeline4.2.tsv", function(items) {
   miniLocator.append("rect")
     .attr("id", "miniBox")
     .attr("width", function(d) {return .9*x2(1)})
-    .attr("height", 8)
+    .attr("height", 4)
     .attr("fill", "red")
     .attr("opacity", .3)
     .attr();
