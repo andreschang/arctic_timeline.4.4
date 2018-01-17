@@ -142,8 +142,6 @@ var axis4 = d3.axisLeft(scale4)
 // var axis1m = d3.axisLeft(scale1)
 //   .ticks(200, "f");
 
-// var yAxis = d3.axisLeft(y1);
-
 // BUILD MINI TL
 // mini timeline
 var miniTL = d3.select("#miniTL")
@@ -164,7 +162,6 @@ miniTL.append("rect")
   .attr("fill", "#edf1f2");
 
 // Load data and build timelines
-// d3.tsv("web_timeline4.2.tsv", function(items) {
 d3.tsv("web_timeline4.2.tsv", function(items) {
 
   // lines

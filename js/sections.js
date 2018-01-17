@@ -115,9 +115,14 @@ var scrollVis = function () {
       .call(wrap, 500)
       .style('opacity', 0);
 
-    // Remove year above title slide
+    // Custom slide edits
     g.selectAll('.slide0').filter('.eventYear').remove();
     g.selectAll('.slide0').filter('.desc').attr('transform', 'translate(0,-80)');
+    g.selectAll('.slide2').filter('.eventYear').text('2000s');
+    g.selectAll('.slide6').filter('.eventYear').text('Late 1800s');
+    g.selectAll('.slide8').filter('.eventYear').text('Early 1800s');
+    g.selectAll('.slide10').filter('.eventYear').text('1300-1850');
+
     };
 
   var setupSections = function() {
