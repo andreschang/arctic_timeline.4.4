@@ -23,7 +23,15 @@ var scrollVis = function () {
   var g = null;
 
   var activateFunctions = [];
-  // var updateFunctions = [];
+  var updateFunctions = [];
+
+  // var parseTime = d3.timeParse("%Y-%m-%d");
+  // var widthG = 500,
+  //   heightG = 400;
+  // var xG = d3.scaleTime()
+  //   .rangeRound([0, widthG]);
+  // var yG = d3.scaleLinear()
+  //   .rangeRound([heightG, 0]);
 
   /**
    * chart
@@ -62,6 +70,62 @@ var scrollVis = function () {
    */
 
   var setupVis = function (timelineData) {
+
+     // Greenland plot
+    // var line = d3.line()
+    //   .x(function(d) { return xG(d.date); })
+    //   .y(function(d) { return yG(d.mass); });
+
+    // d3.csv('greenland_mass_date.csv', function(d){
+    //   d.date = parseTime(d.date);
+    //   d.mass = +d.mass;
+    //   // var bisectDate = d3.bisector(function(d) { return d.date; }).left;
+    //   return d;
+    //   }, function(error, data) {
+    //     if (error) throw error;
+
+    //     xG.domain(d3.extent(data, function(d) { return d.date; }));
+    //     yG.domain(d3.extent(data, function(d) { return d.mass; }));
+
+    //     // console.log(xG(data[158].date))
+    //     // console.log(yG(data[158].mass))
+
+    //     greenlandPlot = g.append("g")
+    //       .attr("transform", "translate("+(width-widthG)+","+(height-heightG-80)+")")
+    //       .attr("class", "slide1 line");
+
+    //     // greenlandPlot.call(d3.axisBottom(xG))
+    //     //   .selectAll(".domain, text")
+    //     //   .remove();
+
+    //     // greenlandPlot.append("g")
+    //     //   .call(d3.axisLeft(yG))
+    //     //   .selectAll(".domain, text")
+    //     //   .remove()
+    //       // .append('text')
+    //       // .text('Ice mass anomaly (Gigatonnes)');
+
+    //     var iceLine = greenlandPlot.append("path")
+    //       .datum(data)
+    //       .attr("fill", "none")
+    //       .attr("stroke", "steelblue")
+    //       .attr("stroke-linejoin", "round")
+    //       .attr("stroke-linecap", "round")
+    //       .attr("stroke-width", 2)
+    //       .attr("d", line);
+
+    //     var totalLength = iceLine.node().getTotalLength();
+    //       iceLine
+    //         .attr("stroke-dasharray", totalLength + " " + totalLength)
+    //         .attr("stroke-dashoffset", totalLength)
+    //         .transition()
+    //         .duration(8000)
+    //         // .ease("linear")
+    //         .attr("stroke-dashoffset", 0);
+
+    //     greenlandPlot.style('opacity',0);
+
+    //     });
 
     var img_slides = [2,3,4,6,8,10,12],
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
@@ -118,62 +182,13 @@ var scrollVis = function () {
     // Remove year above title slide
     g.selectAll('.slide0').filter('.eventYear').remove();
     g.selectAll('.slide0').filter('.desc').attr('transform', 'translate(0,-80)');
-
-    // Greenland plot
-    var parseTime = d3.timeParse("%Y-%m-%d");
-    var widthG = 500,
-      heightG = 400;
-    var xG = d3.scaleTime()
-        .rangeRound([0, widthG]);
-    var yG = d3.scaleLinear()
-        .rangeRound([heightG, 0]);
-
-    var line = d3.line()
-      .x(function(d) { return xG(d.date); })
-      .y(function(d) { return yG(d.mass); });
-
-    d3.csv('greenland_mass_date.csv', function(d){
-      d.date = parseTime(d.date);
-      d.mass = +d.mass;
-      return d;
-      }, function(error, data) {
-        if (error) throw error;
-
-        xG.domain(d3.extent(data, function(d) { return d.date; }));
-        yG.domain(d3.extent(data, function(d) { return d.mass; }));
-
-        greenlandPlot = g.append("g")
-          .attr("transform", "translate("+(width-widthG)+","+(height-heightG-80)+")")
-          .attr("class", "slide1 slide2");
-
-        greenlandPlot.call(d3.axisBottom(xG))
-          .selectAll(".domain")
-          .remove();
-
-        greenlandPlot.append("g")
-          .call(d3.axisLeft(yG))
-          .selectAll(".domain")
-          .remove()
-          // .append('text')
-          // .text('Ice mass anomaly (Gigatonnes)');
-
-        greenlandPlot.append("path")
-          .datum(data)
-          .attr("fill", "none")
-          .attr("stroke", "steelblue")
-          .attr("stroke-linejoin", "round")
-          .attr("stroke-linecap", "round")
-          .attr("stroke-width", 2)
-          .attr("d", line);
-
-      });
-
     };
 
   var setupSections = function() {
 
     for (var i = 0; i < 16; ++i){
 
+      updateFunctions[i] = function () {};
       activateFunctions[i] = getFun(i);};
 
     function getFun(val) {
@@ -199,14 +214,20 @@ var scrollVis = function () {
           .duration(600)
           .style('opacity', 1.0);
 
-        g.selectAll('.slide'+val).filter('.img, .eventYear')
+        g.selectAll('.slide'+val).filter('.img, .eventYear, .line')
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
           .style('opacity', 0.4);};
       };
+
   };
 
+
+function updateGreen(scrollYear) {
+
+
+};
 
   var wrap = function(text, width) {
   text.each(function() {
@@ -231,7 +252,7 @@ var scrollVis = function () {
       }
     }
   });
-}
+};
 
   /**
    * DATA FUNCTIONS
@@ -246,7 +267,7 @@ var scrollVis = function () {
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
     scrolledSections.forEach(function (i) {
-      activateFunctions[i](); console.log(i);
+      activateFunctions[i]();
     });
     lastIndex = activeIndex;
   };
@@ -257,8 +278,8 @@ var scrollVis = function () {
    * @param index
    * @param progress
    */
-  // chart.update = function (index, progress) {
-  //   updateFunctions[index](progress);
+  // chart.update = function (index, scrollYear) {
+  //   updateFunctions[index](scrollYear);
   // };
 
   // return chart function
@@ -299,12 +320,20 @@ function display(data) {
     plot.activate(index);
   });
 
-  // scroll.on('progress', function (index, progress) {
-  //   plot.update(index, progress);
+  // scroll.on('progress', function (index, scrollYear) {
+  //   plot.update(index, scrollYear);
   // });
 }
 
+function gDisplay(data) {
+  var plot = scrollVis();
+  d3.select('#vis')
+    .datum(data)
+    .call(plot);
+}
+
 // load data and display
+// d3.csv('greenland_mass_date.csv', gDisplay)
 d3.tsv('web_timeline4.2.tsv', display);
 // d3.tsv('https://rawgit.com/andreschang/arctic_timeline.4.2/master/web_timeline4.2.tsv', display);
 

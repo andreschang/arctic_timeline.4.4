@@ -95,16 +95,18 @@ function scroller() {
     var pos = window.pageYOffset - 5 - containerStart;
     var yLoc = (pos > 0) ? pos : 0;
     var sectionIndex = d3.bisect(sectionPositions, pos);
-    sectionIndex = Math.min(sections.size() - 1, sectionIndex);
+    sectionIndex = Math.min(sections.size(), sectionIndex);
     // console.log(containerStart);
     // console.log(sectionPositions);
     // console.log(pos);
-    console.log(sectionIndex);
+    // console.log(sectionIndex);
 
     d3.select("#miniLocator")
       .attr("transform", "translate(0,"+boxMultiScale((yLoc+5))+")");
-    d3.select("#miniYear")
-      .text(d3.format(".0f")(yearMultiScale((yLoc+5))));
+
+    var scrollYear = yearMultiScale((yLoc+5))
+    // d3.select("#miniYear")
+    //   .text(d3.format(".0f")(scrollYear));
 
     if (currentIndex !== sectionIndex) {
       // @v4 you now `.call` the dispatch callback
@@ -118,7 +120,7 @@ function scroller() {
     var prevTop = sectionPositions[prevIndex];
     var progress = (pos - prevTop) / (sectionPositions[sectionIndex] - prevTop);
     // @v4 you now `.call` the dispatch callback
-    dispatch.call('progress', this, currentIndex, progress);
+    dispatch.call('progress', this, currentIndex, scrollYear);
   }
 
   /**
