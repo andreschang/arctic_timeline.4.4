@@ -79,12 +79,26 @@ var scrollVis = function () {
       .on("mouseout", handleMouseOut)
       .style('opacity', 0);
 
+    g.append('g').selectAll('eventDepth')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' eventDepth'})
+      .attr('y', (height / 31))
+      // .attr('y', (height / 10.8))
+      .attr('x', 6)
+      .text(function(d) {
+        var depth = d.depthm > 0.0 ? '-'+d.depthm+' meters / -'+d.depthmi+' miles' : '';
+        return depth})
+      .style('opacity', 0);
+
     g.append('g').selectAll('eventYear')
       .data(timelineData)
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' eventYear'})
       .attr('y', (height / 10.8))
+      // .attr('y', (height / 24))
       .attr('x', 6)
       .text(function(d) { var showYear = d.start >= 0 ? d.start : -d.start+' BC';
         return( showYear );})
@@ -118,6 +132,7 @@ var scrollVis = function () {
     g.selectAll('.slide2').filter('.eventYear').text('2000s');
     g.selectAll('.slide6').filter('.eventYear').text('Late 1800s');
     g.selectAll('.slide8').filter('.eventYear').text('Early 1800s');
+    g.selectAll('.slide9').filter('.eventYear').text('1500-1800');
     g.selectAll('.slide10').filter('.eventYear').text('1300-1850');
 
     };
@@ -246,5 +261,5 @@ function display(data) {
 }
 
 // load data and display
-d3.tsv('web_timeline4.3.tsv', display);
+d3.tsv('web_timeline.4.4.tsv', display);
 

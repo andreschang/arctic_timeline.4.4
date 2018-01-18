@@ -134,7 +134,7 @@ var axis4 = d3.axisLeft(scale4)
 var miniTL = d3.select("#miniTL")
   .append("svg")
   .attr("width", miniWidth+2*m)
-  .attr("height", miniHeight+mTop+m)
+  .attr("height", miniHeight+2*mTop)
   .append("g")
   .attr("transform", "translate(" + mLeft + "," + mTop + ")") // position miniTL
   .attr("height", miniHeight)
@@ -149,7 +149,7 @@ miniTL.append("rect")
   .attr("fill", "#edf1f2");
 
 // Load data and build timelines
-d3.tsv("web_timeline4.3.tsv", function(items) {
+d3.tsv("web_timeline.4.4.tsv", function(items) {
 
   // lines
 

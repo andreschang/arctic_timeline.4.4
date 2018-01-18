@@ -47,8 +47,15 @@
   /* background-color: #ddd; */
 }
 
-#vis .eventYear {
-  font-size:2em;
+#vis .eventYear{
+  font-size:1.84em;
+  fill: #f6a355;
+  text-anchor: left;
+}
+
+#vis .eventDepth{
+  font-size:1.1em;
+  font-weight: 300;
   fill: #f6a355;
   text-anchor: left;
 }
@@ -61,7 +68,6 @@
 
 #vis .desc {
   font-size:1.15em;
-  /*font-weight: 300;*/
   line-height: 1.4em;
   text-anchor: left;
 }
