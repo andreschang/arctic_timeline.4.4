@@ -1,16 +1,3 @@
-// Version 4.2.1
-// 2018-01-08
-// Plays nicely with scroll
-// Builds mini-timeline on left
-// And attaches 'step' attributes 
-// 2018-01-09
-// Adds locator box to miniTL
-// 2018-01-10
-// Polished locator box
-// Added v2 panel text
-// Added image in Slide1
-// Need to get mouseover to work
-
 // Parameters
 var lanes = ["Timeline"],
   laneLength = lanes.length,
@@ -27,10 +14,10 @@ tf.splice(5,0,-1000000)
 // Placement
 var mTop = 50,
   m = 15,
-  mLeft = 25,
+  mLeft = 30,
   mainHeight = 6000 - mTop-m,
   miniHeight = 500 - mTop-m,
-  miniWidth = 80 - 2*m,
+  miniWidth = 70 - 2*m,
   mainWidth = 220 - miniWidth;
 
 // Calculate ranges for shifting scale timeline
@@ -112,13 +99,13 @@ var mainTL = d3.select("#sections")
   .attr("width", mainWidth+miniWidth)
   .attr("height", mainHeight+mTop+m)
   .append("g")
-  .attr("transform", "translate(" + (miniWidth+m) + "," + mTop + ")") // position mainTL
+  .attr("transform", "translate(" + (miniWidth+mLeft+m+8) + "," + mTop + ")") // position mainTL
   .attr("height", mainHeight)
   .attr("width", mainWidth);
 
 mainTL.append("rect")
   .attr("x", .12*x1(1))
-  .attr("width", function(d) {return .8*x1(1)})
+  .attr("width", function(d) {return .75*x1(1)})
   .attr("height", mainHeight)
   .attr("fill", "#edf1f2");
 
@@ -155,7 +142,7 @@ var miniTL = d3.select("#miniTL")
 
 miniTL.append("rect")
   .attr("x", 0.05*x2(1))
-  .attr("width", function(d) {return .8*x2(1)})
+  .attr("width", .75*x2(1))
   // height edited to match limit of miniBox slider
   // .attr("height", (miniHeight-16))
   .attr("height", (miniHeight))
@@ -174,7 +161,7 @@ d3.tsv("web_timeline4.3.tsv", function(items) {
     .attr("id", function(d) {return "mainEvent"+ d.lane + d.start})
     .attr("y", function(d) {return multiScale(d.end, tf, t0, scaleDom);})
     .attr("x", .12*x1(1))
-    .attr("width", function(d) {return .8*x1(1)})
+    .attr("width", .75*x1(1))
     .attr("height", function(d) {return multiScale(d.start, tf, t0, scaleDom)-multiScale(d.end, tf, t0, scaleDom)});
 
   // Remove event marker for title slide
@@ -235,7 +222,7 @@ d3.tsv("web_timeline4.3.tsv", function(items) {
     .attr("y", function(d) {return y2(d.end);})
     // .attr("x", function(d) {return x2(d.lane)+0.1*x2(1);})
     .attr("x", 0.05*x2(1))
-    .attr("width", function(d) {return .8*x2(1)})
+    .attr("width", .75*x2(1))
     .attr("height", function(d) {return y2(d.start)-y2(d.end)});
 
   var miniLocator = miniTL.append("g")
@@ -245,14 +232,24 @@ d3.tsv("web_timeline4.3.tsv", function(items) {
 
   miniLocator.append("rect")
     .attr("id", "miniBox")
-    .attr("width", function(d) {return .9*x2(1)})
+    .attr("width", .85*x2(1))
     .attr("height", 4)
-    .attr("fill", "red")
-    .attr("opacity", .3)
+    .attr("fill", "#F6A04D")
+    .attr("opacity", .5)
     .attr();
 
+  miniLocator.append("line")
+    .attr("x1", -4)
+    .attr("x2", 0)
+    .attr("y1", 2)
+    .attr("y2", 2)
+    .attr("stroke-width", 1)
+    .attr("opacity", .5)
+    .attr("stroke", "#F6A04D");
+
   miniLocator.append("text")
-    .attr("id", "miniYear");
+    .attr("id", "miniYear")
+    .attr("transform", "translate(-8,2)rotate(-90)");
 
   // d3.selectAll(".event0-1000000").filter(".miniEvent")
   //   .attr("height", (86.8246-16));

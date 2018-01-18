@@ -14,6 +14,11 @@
   position: fixed;
   width: 80;
   z-index: 80;
+  font-size: 0.7em;
+  font-weight: 300;
+  fill: #f6a355;
+  text-anchor: middle;
+  /*background: #a4abb5;*/
 }
 
 #sections {
@@ -24,7 +29,6 @@
   z-index: 90;
   padding-bottom: 200px;
   padding-right: 20px;
-  /*background: #a4abb5;*/
   /*opacity: .5;*/
 }
 
@@ -45,7 +49,7 @@
 
 #vis .eventYear {
   font-size:2em;
-  fill: red;
+  fill: #f6a355;
   text-anchor: left;
 }
 

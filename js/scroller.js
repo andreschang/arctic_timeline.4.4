@@ -103,8 +103,11 @@ function scroller() {
 
     d3.select("#miniLocator")
       .attr("transform", "translate(0,"+boxMultiScale((yLoc+5))+")");
-    // d3.select("#miniYear")
-    //   .text(d3.format(".0f")(yearMultiScale((yLoc+5))));
+    d3.select("#miniYear")
+      .text(function() {
+        var year = yearMultiScale((yLoc+5));
+        var showYear = year >= 0 ? d3.format(".0f")(year) : -d3.format(".0f")(year)+' BC';
+        return( showYear )});
 
     if (currentIndex !== sectionIndex) {
       // @v4 you now `.call` the dispatch callback

@@ -5,6 +5,7 @@
  * using reusable charts pattern:
  * http://bost.ocks.org/mike/chart/
  */
+
 var scrollVis = function () {
   // constants to define the size
   // and margins of the vis area.
@@ -17,9 +18,6 @@ var scrollVis = function () {
 
 
   var svg = null;
-
-  // d3 selection that will be used
-  // for displaying visualizations
   var g = null;
 
   var activateFunctions = [];
@@ -29,8 +27,7 @@ var scrollVis = function () {
    * chart
    *
    * @param selection - the current d3 selection(s)
-   *  to draw the visualization in. For this
-   *  example, we will be drawing it in #vis
+   *  to draw the visualization in.
    */
   var chart = function (selection) {
     selection.each(function (timelineData) {
@@ -154,11 +151,11 @@ var scrollVis = function () {
           .duration(600)
           .style('opacity', 1.0);
 
-        g.selectAll('.slide'+val).filter('.img, .eventYear')
+        g.selectAll('.slide'+val).filter('.img')
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
-          .style('opacity', 0.4);};
+          .style('opacity', 0.4);}
       };
   };
 
@@ -188,14 +185,6 @@ var scrollVis = function () {
   });
 }
 
-  /**
-   * DATA FUNCTIONS
-   *
-   * Used to coerce the data into the
-   * formats we need to visualize
-   *
-   */
-
   chart.activate = function (index) {
     activeIndex = index;
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
@@ -222,11 +211,8 @@ var scrollVis = function () {
 
 
 /**
- * display - called once data
- * has been loaded.
  * sets up the scroller and
  * displays the visualization.
- *
  * @param data - loaded tsv data
  */
 function display(data) {
