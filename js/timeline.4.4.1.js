@@ -162,7 +162,7 @@ miniTL.append("rect")
   .attr("fill", "#edf1f2");
 
 // Load data and build timelines
-d3.tsv("web_timeline4.2.tsv", function(items) {
+d3.tsv("web_timeline4.3.tsv", function(items) {
 
   // lines
 

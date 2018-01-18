@@ -127,7 +127,7 @@ var scrollVis = function () {
 
   var setupSections = function() {
 
-    for (var i = 0; i < 16; ++i){
+    for (var i = 0; i < 19; ++i){
 
       activateFunctions[i] = getFun(i);};
 
@@ -260,5 +260,5 @@ function display(data) {
 }
 
 // load data and display
-d3.tsv('web_timeline4.2.tsv', display);
+d3.tsv('web_timeline4.3.tsv', display);
 
