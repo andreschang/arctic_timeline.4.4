@@ -64,7 +64,21 @@ var scrollVis = function () {
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
       img_x = [270, 400, 340, 228, 370, 240, 240],
-      img_y = [120, 100, 120, 126, 50, 120, 120];
+      img_y = [120, 100, 120, 126, 50, 120, 120],
+      img_w = [300, 400, 200, 200, 200, 200, 200]
+
+    // g.append('g').selectAll('img')
+    //   .data(img_slides)
+    //   .enter()
+    //   .append('svg:image')
+    //   .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
+    //   .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
+    //   .attr('x', function(d,i) {return img_x[i]})
+    //   .attr('y', function(d,i) {return img_y[i]})
+    //   .attr('width', function(d,i) {return (width-img_x[i])})
+    //   .on("mouseover", handleMouseOver)
+    //   .on("mouseout", handleMouseOut)
+    //   .style('opacity', 0);
 
     g.append('g').selectAll('img')
       .data(img_slides)
@@ -72,57 +86,72 @@ var scrollVis = function () {
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
-      .attr('x', function(d,i) {return img_x[i]})
-      .attr('y', function(d,i) {return img_y[i]})
-      .attr('width', function(d,i) {return (width-img_x[i])})
+      .attr('x', 10)
+      .attr('y', height/8)
+      .attr('width', function(d,i) {return (img_w[i])})
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
       .style('opacity', 0);
 
-    g.append('g').selectAll('eventDepth')
-      .data(timelineData)
-      .enter()
-      .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' eventDepth'})
-      .attr('y', (height / 31))
-      // .attr('y', (height / 10.8))
-      .attr('x', 6)
-      .text(function(d) {
-        var depth = d.depthm > 0.0 ? '-'+d.depthm+' meters / -'+d.depthmi+' miles' : '';
-        return depth})
-      .style('opacity', 0);
+    // g.append('g').selectAll('eventDepth')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' eventDepth'})
+    //   .attr('y', (height / 31))
+    //   // .attr('y', (height / 10.8))
+    //   .attr('x', 6)
+    //   .text(function(d) {
+    //     var depth = d.depthm > 0.0 ? '-'+d.depthm+' meters / -'+d.depthmi+' miles' : '';
+    //     return depth})
+    //   .style('opacity', 0);
 
-    g.append('g').selectAll('eventYear')
-      .data(timelineData)
-      .enter()
-      .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' eventYear'})
-      .attr('y', (height / 10.8))
-      // .attr('y', (height / 24))
-      .attr('x', 6)
-      .text(function(d) { var showYear = d.start >= 0 ? d.start : -d.start+' BC';
-        return( showYear );})
-      .style('opacity', 0);
+    // g.append('g').selectAll('eventYear')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' eventYear'})
+    //   .attr('y', (height / 10.8))
+    //   // .attr('y', (height / 24))
+    //   .attr('x', 6)
+    //   .text(function(d) { var showYear = d.start >= 0 ? d.start : -d.start+' BC';
+    //     return( showYear );})
+    //   .style('opacity', 0);
+
+    // g.selectAll('.eventYear, .eventDepth')
+    //   .attr('transform', 'translate(450, 60)rotate(90)');
+    // //   .attr('transform', 'translate(0, 120)');
 
     g.append('g').selectAll('title')
       .data(timelineData)
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' title'})
-      .attr('y',  (height / 5))
+      .attr('y',  (height / 10.8))
       .attr('x', width / 3)
       .text(function(d) {return d.id})
       .call(wrap, 450)
       .style('opacity', 0);
 
-    g.append('g').selectAll('desc')
+    // g.append('g').selectAll('desc')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' desc'})
+    //   .attr('y',  (height / 3) + (height / 5))
+    //   .attr('x', width / 5)
+    //   .text(function(d) {return d.desc})
+    //   .call(wrap, 500)
+    //   .style('opacity', 0);
+
+    g.append('g').selectAll('quote')
       .data(timelineData)
       .enter()
       .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' desc'})
+      .attr('class', function(d, i) {return 'slide'+i+' quote'})
       .attr('y',  (height / 3) + (height / 5))
       .attr('x', width / 5)
-      .text(function(d) {return d.desc})
+      .text(function(d) {return d.quote})
       .call(wrap, 500)
       .style('opacity', 0);
 
