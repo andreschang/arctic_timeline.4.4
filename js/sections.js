@@ -64,7 +64,24 @@ var scrollVis = function () {
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
       img_x = [270, 400, 340, 228, 370, 240, 240],
-      img_y = [120, 100, 120, 126, 50, 120, 120];
+      img_y = [120, 100, 120, 126, 50, 120, 120],
+      img_xx = [400, 400, 400, 400, 400, 400, 400],
+      img_yy = [(height / 3), (height / 3),(height / 3),(height / 3),(height / 3),(height / 3), (height / 3)],
+      img_ww = [300, 300, 300, 300, 300, 300, 300],
+      slideT = 140;
+
+    // g.append('g').selectAll('img')
+    //   .data(img_slides)
+    //   .enter()
+    //   .append('svg:image')
+    //   .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
+    //   .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
+    //   .attr('x', function(d,i) {return img_x[i]})
+    //   .attr('y', function(d,i) {return img_y[i]})
+    //   .attr('width', function(d,i) {return (width-img_x[i])})
+    //   .on("mouseover", handleMouseOver)
+    //   .on("mouseout", handleMouseOut)
+    //   .style('opacity', 0);
 
     g.append('g').selectAll('img')
       .data(img_slides)
@@ -72,9 +89,9 @@ var scrollVis = function () {
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
-      .attr('x', function(d,i) {return img_x[i]})
-      .attr('y', function(d,i) {return img_y[i]})
-      .attr('width', function(d,i) {return (width-img_x[i])})
+      .attr('x', function(d,i) {return img_xx[i]})
+      .attr('y', function(d,i) {return img_yy[i]})
+      .attr('width', function(d,i) {return (img_ww[i])})
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
       .style('opacity', 0);
@@ -110,20 +127,31 @@ var scrollVis = function () {
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' title'})
       .attr('y',  (height / 5))
-      .attr('x', width / 3)
       .text(function(d) {return d.id})
       .call(wrap, 450)
+      // .attr('transform', 'translate('+slideT+',0)')
       .style('opacity', 0);
 
-    g.append('g').selectAll('desc')
+    // g.append('g').selectAll('desc')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' desc'})
+    //   .attr('y',  (height / 3) + (height / 5))
+    //   .attr('x', width / 5)
+    //   .text(function(d) {return d.desc})
+    //   .call(wrap, 500)
+    //   .style('opacity', 0);
+
+    g.append('g').selectAll('quote')
       .data(timelineData)
       .enter()
       .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' desc'})
-      .attr('y',  (height / 3) + (height / 5))
-      .attr('x', width / 5)
-      .text(function(d) {return d.desc})
-      .call(wrap, 500)
+      .attr('class', function(d, i) {return 'slide'+i+' quote'})
+      .attr('y',  (height / 1.8))
+      .text(function(d) {return d.quote})
+      .call(wrap, 420)
+      // .attr('transform', 'translate('+slideT+',0)')
       .style('opacity', 0);
 
     // Custom slide edits
