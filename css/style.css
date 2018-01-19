@@ -72,6 +72,13 @@
   text-anchor: left;
 }
 
+#vis .quote {
+  font-family: 'Open Sans', sans-serif;
+  font-size:1.6em;
+  line-height: 1.4em;
+  text-anchor: left;
+}
+
 .axis path,
 .axis line {
   fill: none;

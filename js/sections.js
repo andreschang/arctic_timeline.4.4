@@ -63,8 +63,10 @@ var scrollVis = function () {
     var img_slides = [2,3,4,6,8,10,12],
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
-      img_x = [270, 400, 340, 228, 370, 240, 240],
-      img_y = [120, 100, 120, 126, 50, 120, 120];
+      imgX = [270, 400, 340, 228, 370, 240, 240],
+      imgY = [120, 100, 120, 126, 50, 120, 120],
+      qWidth = [200, 200, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400,
+      400, 400, 400, 400];
 
     g.append('g').selectAll('img')
       .data(img_slides)
@@ -72,9 +74,9 @@ var scrollVis = function () {
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
-      .attr('x', function(d,i) {return img_x[i]})
-      .attr('y', function(d,i) {return img_y[i]})
-      .attr('width', function(d,i) {return (width-img_x[i])})
+      .attr('x', function(d,i) {return imgX[i]})
+      .attr('y', function(d,i) {return imgY[i]})
+      .attr('width', function(d,i) {return (width-imgX[i])})
       .on("mouseover", handleMouseOver)
       .on("mouseout", handleMouseOut)
       .style('opacity', 0);
@@ -115,14 +117,25 @@ var scrollVis = function () {
       .call(wrap, 450)
       .style('opacity', 0);
 
-    g.append('g').selectAll('desc')
+    // g.append('g').selectAll('desc')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' desc'})
+    //   .attr('y',  (height / 3) + (height / 5))
+    //   .attr('x', width / 5)
+    //   .text(function(d) {return d.desc})
+    //   .call(wrap, 500)
+    //   .style('opacity', 0);
+
+    g.append('g').selectAll('quote')
       .data(timelineData)
       .enter()
       .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' desc'})
+      .attr('class', function(d, i) {return 'slide'+i+' quote'})
       .attr('y',  (height / 3) + (height / 5))
       .attr('x', width / 5)
-      .text(function(d) {return d.desc})
+      .text(function(d) {return d.quote})
       .call(wrap, 500)
       .style('opacity', 0);
 
