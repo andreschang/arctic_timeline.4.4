@@ -99,7 +99,7 @@ function scroller() {
     // console.log(containerStart);
     // console.log(sectionPositions);
     // console.log(pos);
-    console.log(sectionIndex);
+    // console.log(sectionIndex);
 
     d3.select("#miniLocator")
       .attr("transform", "translate(0,"+boxMultiScale((yLoc+5))+")");

@@ -21,7 +21,7 @@ var scrollVis = function () {
   var g = null;
 
   var activateFunctions = [];
-  // var updateFunctions = [];
+  var updateFunctions = [];
 
   /**
    * chart
@@ -115,14 +115,25 @@ var scrollVis = function () {
       .call(wrap, 450)
       .style('opacity', 0);
 
-    g.append('g').selectAll('desc')
+    // g.append('g').selectAll('desc')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('text')
+    //   .attr('class', function(d, i) {return 'slide'+i+' desc'})
+    //   .attr('y',  (height / 3) + (height / 5))
+    //   .attr('x', width / 5)
+    //   .text(function(d) {return d.desc})
+    //   .call(wrap, 500)
+    //   .style('opacity', 0);
+
+    g.append('g').selectAll('quote')
       .data(timelineData)
       .enter()
       .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' desc'})
+      .attr('class', function(d, i) {return 'slide'+i+' quote'})
       .attr('y',  (height / 3) + (height / 5))
       .attr('x', width / 5)
-      .text(function(d) {return d.desc})
+      .text(function(d) {return d.quote})
       .call(wrap, 500)
       .style('opacity', 0);
 
@@ -139,9 +150,10 @@ var scrollVis = function () {
 
   var setupSections = function() {
 
-    for (var i = 0; i < 19; ++i){
+    for (var i = 0; i < 20; ++i){
 
-      activateFunctions[i] = getFun(i);};
+      activateFunctions[i] = getFun(i);
+      updateFunctions[i] = getUp(i)};
 
     function getFun(val) {
         var xb = val-1,
@@ -172,7 +184,27 @@ var scrollVis = function () {
           .duration(600)
           .style('opacity', 0.4);}
       };
-  };
+
+    function getUp(val) {
+      return function(progress) {
+          var xb = val-1,
+          xf = val+1,
+          img_y = [120, 100, 120, 126, 50, 120, 120];
+
+        g.selectAll('.slide'+xb).filter('.img')
+        // 150 should be img height 
+          .attr('transform', function(d,i) {
+            var img_h = d3.select(this).node().getBBox().height,
+            offset = (height-img_y[i]-img_h/2)/(height);
+            console.log((-4*Math.pow((progress-offset),3)));
+            return 'translate(0,'+(-4*Math.pow((progress-offset),3))*(height+img_h)+')'}
+          )}
+    }
+
+    // updateFunctions[2] = function(progress) {
+    //   g.selectAll('.slide2').filter('.img')
+    //     .style('opacity', progress);}
+    };
 
 
   var wrap = function(text, width) {
@@ -205,7 +237,7 @@ var scrollVis = function () {
     var sign = (activeIndex - lastIndex) < 0 ? -1 : 1;
     var scrolledSections = d3.range(lastIndex + sign, activeIndex + sign, sign);
     scrolledSections.forEach(function (i) {
-      activateFunctions[i](); console.log(i);
+      activateFunctions[i]();
     });
     lastIndex = activeIndex;
   };
@@ -216,9 +248,10 @@ var scrollVis = function () {
    * @param index
    * @param progress
    */
-  // chart.update = function (index, progress) {
-  //   updateFunctions[index](progress);
-  // };
+  chart.update = function (index, progress) {
+    updateFunctions[index](progress);
+    // console.log(progress)
+  };
 
   // return chart function
   return chart;
@@ -255,9 +288,9 @@ function display(data) {
     plot.activate(index);
   });
 
-  // scroll.on('progress', function (index, progress) {
-  //   plot.update(index, progress);
-  // });
+  scroll.on('progress', function (index, progress) {
+    plot.update(index, progress);
+  });
 }
 
 // load data and display
