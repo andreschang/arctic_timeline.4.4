@@ -65,21 +65,66 @@ var scrollVis = function () {
       'bruegel', 'hyperborea'],
       imgX = [270, 400, 340, 228, 370, 240, 240],
       imgY = [120, 100, 120, 126, 50, 120, 120],
-      qWidth = [200, 200, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400, 400,
-      400, 400, 400, 400];
+      qImgX = [-8, (width/8), (width/8), (width/8), (width/8)],
+      qImgY = [285, (height / 2.8), (height / 2.8)],
+      qWidth = [width-220]
+      // qImgXX = [(width/10), (width/8), (width/8), (width/8), (width/8)],
+      // qImgYY = [(height / 2.8), (height / 2.8), (height / 2.8)],
+      // rectH = [340, 342, 342, 355, 315, 343, 343],
+      qY = [(height / 2.4), (height / 2.7), (height / 3.6), (height / 1.85), (height / 2.4), 
+      (height / 1.85), (height / 2.4), (height / 2.4), (height / 2.4), (height / 1.85), (height / 2.4),
+      (height / 2.4)];
+
+    // g.append('g').selectAll('clipPaths')
+    //   .data(img_slides)
+    //   .enter()
+    //   .append('clipPath')
+    //   .attr('id', function(d,i) {return 'gImgClip'+img_slides[i]})
+    //   .append('rect')
+    //     .attr('x', function(d,i) {return qImgXX[i]})
+    //     .attr('y', function(d,i) {return qImgYY[i]})
+    //     .attr('width', 500)
+    //     .attr('height', 300);
 
     g.append('g').selectAll('img')
       .data(img_slides)
       .enter()
       .append('svg:image')
-      .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
+      // .attr('clip-path', function(d,i) {return 'url(#gImgClip'+img_slides[i]+')'})
+      .attr('class', function(d,i) {return 'slide'+img_slides[i]+' qImg'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
-      .attr('x', function(d,i) {return imgX[i]})
-      .attr('y', function(d,i) {return imgY[i]})
-      .attr('width', function(d,i) {return (width-imgX[i])})
-      .on("mouseover", handleMouseOver)
-      .on("mouseout", handleMouseOut)
+      .attr('x', function(d,i) {return qImgX[i]})
+      .attr('y', function(d,i) {return qImgY[i]})
+      .attr('width', function(d,i) {return qWidth[i]})
+      // .on("mouseover", handleMouseOver)
+      // .on("mouseout", handleMouseOut)
       .style('opacity', 0);
+
+    // g.append('g').selectAll('rects')
+    //   .data(timelineData)
+    //   .enter()
+    //   .append('rect')
+    //   .attr('class', function(d, i) {return 'slide'+i+' rects'})
+    //   .attr('x', -8)
+    //   // .attr('y',  (height / 31))
+    //   .attr('width', 510)
+    //   .attr('height', function(d, i) {return rectH[i]})
+    //   .attr('fill', 'white')
+    //   // .attr('stroke', 'black')
+    //   .style('opacity', 0);
+
+    // g.append('g').selectAll('img')
+    //   .data(img_slides)
+    //   .enter()
+    //   .append('svg:image')
+    //   .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
+    //   .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
+    //   .attr('x', function(d,i) {return imgX[i]})
+    //   .attr('y', function(d,i) {return imgY[i]})
+    //   .attr('width', function(d,i) {return (width-imgX[i])})
+    //   .on("mouseover", handleMouseOver)
+    //   .on("mouseout", handleMouseOut)
+    //   .style('opacity', 0);
 
     g.append('g').selectAll('eventDepth')
       .data(timelineData)
@@ -111,7 +156,7 @@ var scrollVis = function () {
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' title'})
-      .attr('y',  (height / 5))
+      .attr('y',  (height / 5.4))
       .attr('x', width / 3)
       .text(function(d) {return d.id})
       .call(wrap, 450)
@@ -133,8 +178,7 @@ var scrollVis = function () {
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' quote'})
-      .attr('y',  (height / 3) + (height / 5))
-      .attr('x', width / 5)
+      .attr('y',  function(d, i) {return qY[i]})
       .text(function(d) {return d.quote})
       .call(wrap, 500)
       .style('opacity', 0);
@@ -183,7 +227,13 @@ var scrollVis = function () {
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
-          .style('opacity', 0.4);}
+          .style('opacity', 0.4);
+
+        g.selectAll('.slide'+val).filter('.rects')
+          .attr('pointer-events', 'all')
+          .transition()
+          .duration(600)
+          .style('opacity', 0.8);}
       };
   };
 
