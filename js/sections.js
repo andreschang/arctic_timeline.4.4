@@ -61,36 +61,38 @@ var scrollVis = function () {
   var setupVis = function (timelineData) {
 
     var img_slides = [2,3,4,6,8,10,12],
+      type1 = [0,1,2,5,6,7,9,10,11,12,13,14,15,16,17,18],
+      type2 = [3,4,8],
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
-      imgX = [270, 400, 340, 228, 370, 240, 240],
-      imgY = [120, 100, 120, 126, 50, 120, 120],
-      qImgX = [-8, (width/8), (width/8), (width/8), (width/8)],
-      qImgY = [(height / 4.5), (height / 2.8), (height / 2.8)],
-      qWidth = [width-240]
-      // qImgXX = [(width/10), (width/8), (width/8), (width/8), (width/8)],
-      // qImgYY = [(height / 2.8), (height / 2.8), (height / 2.8)],
+      // imgX = [270, 400, 340, 228, 370, 240, 240],
+      // imgY = [120, 100, 120, 126, 50, 120, 120],
+      qImgX = [-6, 265, 290, 0, (width/8)],
+      qImgY = [(height / 4.5), (height / 4.5), (height / 4.15), (height / 4)],
+      qWidth = [width-240, 180, 200, 400],
+      qImgXX = [-6, 290, 290, 0, (width/8)],
+      qImgYY = [(height / 4.8), (height / 3.9), (height / 4.15), (height / 4)],
+      qImgH = [240, 240, 400, 400]
       // rectH = [340, 342, 342, 355, 315, 343, 343],
-      qY = [(height / 2.4), (height / 2.7), 392, (height / 1.85), (height / 2.4), 
-      (height / 1.85), (height / 2.4), (height / 2.4), (height / 2.4), (height / 1.85), (height / 2.4),
-      (height / 2.4)];
+      qY = [(height / 2.4), (height / 2.7), (height/1.33), (height / 2.5), (height / 2.5), (height/2.1),
+      (height/1.3)]
 
-    // g.append('g').selectAll('clipPaths')
-    //   .data(img_slides)
-    //   .enter()
-    //   .append('clipPath')
-    //   .attr('id', function(d,i) {return 'gImgClip'+img_slides[i]})
-    //   .append('rect')
-    //     .attr('x', function(d,i) {return qImgXX[i]})
-    //     .attr('y', function(d,i) {return qImgYY[i]})
-    //     .attr('width', 500)
-    //     .attr('height', 300);
+    g.append('g').selectAll('clipPaths')
+      .data(img_slides)
+      .enter()
+      .append('clipPath')
+      .attr('id', function(d,i) {return 'gImgClip'+img_slides[i]})
+      .append('rect')
+        .attr('x', function(d,i) {return qImgXX[i]})
+        .attr('y', function(d,i) {return qImgYY[i]})
+        .attr('width', 500)
+        .attr('height', function(d,i) {return qImgH[i]});
 
     g.append('g').selectAll('img')
       .data(img_slides)
       .enter()
       .append('svg:image')
-      // .attr('clip-path', function(d,i) {return 'url(#gImgClip'+img_slides[i]+')'})
+      .attr('clip-path', function(d,i) {return 'url(#gImgClip'+img_slides[i]+')'})
       .attr('class', function(d,i) {return 'slide'+img_slides[i]+' qImg'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
       .attr('x', function(d,i) {return qImgX[i]})
@@ -179,8 +181,20 @@ var scrollVis = function () {
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' quote'})
       .attr('y',  function(d, i) {return qY[i]})
+      .filter( function(d,i) {return type1.includes(i);})
       .text(function(d) {return d.quote})
       .call(wrap, 500)
+      .style('opacity', 0);
+
+    g.append('g').selectAll('quote')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' quote'})
+      .attr('y',  function(d, i) {return qY[i]})
+      .filter( function(d,i) {return type2.includes(i);})
+      .text(function(d) {return d.quote})
+      .call(wrap, 270)
       .style('opacity', 0);
 
     // Custom slide edits
