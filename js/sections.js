@@ -64,7 +64,11 @@ var scrollVis = function () {
       img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
       'bruegel', 'hyperborea'],
       img_x = [270, 400, 340, 228, 370, 240, 240],
-      img_y = [120, 100, 120, 126, 50, 120, 120];
+      img_y = [120, 100, 120, 126, 50, 90, 120],
+      arrow_x = [100, 62, 259, 174, 316, 166, 376, 350, 400, 400, 234, 425, 
+      306, 128, 136, 83, 100, 2, 100],
+      arrow_y = [410, 320, 410, 320, 350, 350, 320, 350, 320, 350, 350, 320, 
+      380, 380, 380, 320, 380, 320, 350];
 
     g.append('g').selectAll('img')
       .data(img_slides)
@@ -115,16 +119,16 @@ var scrollVis = function () {
       .call(wrap, 450)
       .style('opacity', 0);
 
-    // g.append('g').selectAll('desc')
-    //   .data(timelineData)
-    //   .enter()
-    //   .append('text')
-    //   .attr('class', function(d, i) {return 'slide'+i+' desc'})
-    //   .attr('y',  (height / 3) + (height / 5))
-    //   .attr('x', width / 5)
-    //   .text(function(d) {return d.desc})
-    //   .call(wrap, 500)
-    //   .style('opacity', 0);
+    g.append('g').selectAll('desc')
+      .data(timelineData)
+      .enter()
+      .append('text')
+      .attr('class', function(d, i) {return 'slide'+i+' desc'})
+      .attr('y',  (height / 3) + (height / 5))
+      .attr('x', width / 5)
+      .text(function(d) {return d.desc})
+      .call(wrap, 500)
+      .style('opacity', 0);
 
     g.append('g').selectAll('quote')
       .data(timelineData)
@@ -137,6 +141,28 @@ var scrollVis = function () {
       .call(wrap, 500)
       .style('opacity', 0);
 
+    g.append('g').selectAll('arrows')
+      .data(timelineData)
+      .enter()
+      .append('svg:image')
+      .attr('class', function(d, i) {return 'slide'+i+' arrow'})
+      .attr('xlink:href', 'Read-More2.svg')
+      .attr('x', function(d, i) {return arrow_x[i]})
+      .attr('y', function(d, i) {return arrow_y[i]})
+      .on("click", function(d, i){
+        var sClass = '.slide'+i;
+        g.selectAll(sClass).filter('.quote,.arrow')
+          .transition()
+          .duration(0)
+          .style('opacity', 0);
+        g.selectAll(sClass).filter('.desc')
+          .transition()
+          .duration(200)
+          .style('opacity', 1);})
+      .attr('width', 30)
+      .style('opacity', 0);
+
+
     // Custom slide edits
     g.selectAll('.slide0').filter('.eventYear').remove();
     g.selectAll('.slide0').filter('.desc').attr('transform', 'translate(0,-80)');
@@ -145,6 +171,7 @@ var scrollVis = function () {
     g.selectAll('.slide8').filter('.eventYear').text('Early 1800s');
     g.selectAll('.slide9').filter('.eventYear').text('1500-1800');
     g.selectAll('.slide10').filter('.eventYear').text('1300-1850');
+    g.selectAll('.slide0').filter('.arrow').remove();
 
     };
 
@@ -173,7 +200,7 @@ var scrollVis = function () {
         g.selectAll(':not(.slide'+val+')')
           .attr('pointer-events', 'none');
 
-        g.selectAll('.slide'+val)
+        g.selectAll('.slide'+val).filter(':not(.desc)')
           .transition()
           .duration(600)
           .style('opacity', 1.0);
@@ -182,7 +209,14 @@ var scrollVis = function () {
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
-          .style('opacity', 0.4);}
+          .style('opacity', 0.4);
+
+        g.selectAll('.slide'+val).filter('.arrow')
+          .attr('pointer-events', 'all')
+          .transition()
+          .duration(600)
+          .style('opacity', 1.0);}
+
       };
 
     function getUp(val) {
@@ -192,19 +226,14 @@ var scrollVis = function () {
           img_y = [120, 100, 120, 126, 50, 120, 120];
 
         g.selectAll('.slide'+xb).filter('.img')
-        // 150 should be img height 
+        // trinomial scroll for image to reach its center and then fly off screen
           .attr('transform', function(d,i) {
             var img_h = d3.select(this).node().getBBox().height,
             offset = (height-img_y[i]-img_h/2)/(height);
             console.log((-4*Math.pow((progress-offset),3)));
             return 'translate(0,'+(-4*Math.pow((progress-offset),3))*(height+img_h)+')'}
           )}
-    }
-
-    // updateFunctions[2] = function(progress) {
-    //   g.selectAll('.slide2').filter('.img')
-    //     .style('opacity', progress);}
-    };
+    }};
 
 
   var wrap = function(text, width) {
@@ -219,6 +248,7 @@ var scrollVis = function () {
         // dy = parseFloat(text.attr("dy")),
         dy = 0,
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+    console.log(words)
     while (word = words.pop()) {
       line.push(word);
       tspan.text(line.join(" "));
