@@ -66,12 +66,12 @@ var scrollVis = function () {
       imgX = [270, 400, 340, 228, 370, 240, 240],
       imgY = [120, 100, 120, 126, 50, 120, 120],
       qImgX = [-8, (width/8), (width/8), (width/8), (width/8)],
-      qImgY = [285, (height / 2.8), (height / 2.8)],
-      qWidth = [width-220]
+      qImgY = [(height / 4.5), (height / 2.8), (height / 2.8)],
+      qWidth = [width-240]
       // qImgXX = [(width/10), (width/8), (width/8), (width/8), (width/8)],
       // qImgYY = [(height / 2.8), (height / 2.8), (height / 2.8)],
       // rectH = [340, 342, 342, 355, 315, 343, 343],
-      qY = [(height / 2.4), (height / 2.7), (height / 3.6), (height / 1.85), (height / 2.4), 
+      qY = [(height / 2.4), (height / 2.7), 392, (height / 1.85), (height / 2.4), 
       (height / 1.85), (height / 2.4), (height / 2.4), (height / 2.4), (height / 1.85), (height / 2.4),
       (height / 2.4)];
 
