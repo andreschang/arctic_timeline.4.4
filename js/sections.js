@@ -66,9 +66,9 @@ var scrollVis = function () {
       img_x = [270, 400, 340, 228, 370, 240, 240],
       img_y = [120, 100, 120, 126, 50, 90, 120],
       arrow_x = [100, 62, 259, 174, 316, 166, 376, 350, 400, 400, 234, 425, 
-      306, 128, 136, 83, 100, 2, 100],
-      arrow_y = [410, 320, 410, 320, 350, 350, 320, 350, 320, 350, 350, 320, 
-      380, 380, 380, 320, 380, 320, 350];
+      306, 128, 136, 83, 100, 2, 157],
+      arrow_y = [400, 303, 393, 303, 333, 333, 303, 333, 303, 333, 333, 303, 
+      363, 363, 363, 303, 363, 303, 423];
 
     g.append('g').selectAll('img')
       .data(img_slides)
@@ -124,7 +124,7 @@ var scrollVis = function () {
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' desc'})
-      .attr('y',  (height / 3) + (height / 5))
+      .attr('y',  (height / 2))
       .attr('x', width / 5)
       .text(function(d) {return d.desc})
       .call(wrap, 500)
@@ -135,7 +135,7 @@ var scrollVis = function () {
       .enter()
       .append('text')
       .attr('class', function(d, i) {return 'slide'+i+' quote'})
-      .attr('y',  (height / 3) + (height / 5))
+      .attr('y',  (height / 2))
       .attr('x', width / 5)
       .text(function(d) {return d.quote})
       .call(wrap, 500)

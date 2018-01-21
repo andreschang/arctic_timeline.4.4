@@ -41,6 +41,7 @@ var x1 = d3.scaleLinear()
 var x2 = d3.scaleLinear()
   .domain([0, laneLength])
   .range([0, miniWidth]);
+var gispEnd = y2(-235000)
 
 function multiScale(inputNumber) {
       if (tf[1] <= inputNumber && inputNumber <= tf[0]) {
@@ -147,6 +148,26 @@ miniTL.append("rect")
   // .attr("height", (miniHeight-16))
   .attr("height", (miniHeight))
   .attr("fill", "#edf1f2");
+
+miniTL.append("rect")
+  .attr("x", 0.05*x2(1))
+  .attr("y", gispEnd)
+  .attr("width", .75*x2(1))
+  // height edited to match limit of miniBox slider
+  // .attr("height", (miniHeight-16))
+  .attr("height", (miniHeight-gispEnd))
+  .attr("fill", "#966b51")
+  .style("opacity", 0.3);
+
+miniTL.append("rect")
+  .attr("x", 0.05*x2(1))
+  .attr("y", gispEnd)
+  .attr("width", .75*x2(1))
+  // height edited to match limit of miniBox slider
+  // .attr("height", (miniHeight-16))
+  .attr("height", (miniHeight-gispEnd-y2(-200000)))
+  .attr("fill", "url(#diagonal-stripe-6)")
+  .style("opacity", 0.25);
 
 // Load data and build timelines
 d3.tsv("web_timeline.4.4.tsv", function(items) {
