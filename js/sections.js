@@ -65,14 +65,17 @@ var scrollVis = function () {
       'bruegel', 'hyperborea'],
       img_x = [270, 400, 340, 228, 370, 240, 240],
       img_y = [120, 100, 120, 126, 50, 90, 120],
-      arrow_x = [100, 62, 259, 174, 316, 166, 376, 350, 400, 400, 234, 425, 
-      306, 128, 136, 83, 100, 2, 157],
-      arrow_y = [400, 303, 393, 303, 333, 333, 303, 333, 303, 333, 333, 303, 
-      363, 363, 363, 303, 363, 303, 423];
+      arrow_x = [100, 68, 290, 194, 348, 184, 2, 2, 2, 2, 252, 2, 
+      338, 142, 150, 2, 110, 2, 172],
+      arrow_y = [400, 303, 393, 303, 333, 333, 333, 363, 333, 363, 333, 333, 
+      363, 363, 363, 363, 363, 303, 423];
 
     g.append('g').selectAll('img')
       .data(img_slides)
       .enter()
+      .append('svg:a')
+        .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
+        .attr('data-lightbox', function(d,i) {return 'image #'+i})
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
@@ -116,7 +119,7 @@ var scrollVis = function () {
       .attr('y',  (height / 5))
       .attr('x', width / 3)
       .text(function(d) {return d.id})
-      .call(wrap, 450)
+      .call(wrap, 400)
       .style('opacity', 0);
 
     g.append('g').selectAll('desc')
@@ -146,9 +149,9 @@ var scrollVis = function () {
       .enter()
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+i+' arrow'})
-      .attr('xlink:href', 'Read-More2.svg')
-      .attr('x', function(d, i) {return arrow_x[i]})
-      .attr('y', function(d, i) {return arrow_y[i]})
+      .attr('xlink:href', '../images/Read-More5.svg')
+      .attr('x', function(d, i) {return arrow_x[i]-11})
+      .attr('y', function(d, i) {return arrow_y[i]+1})
       .on("click", function(d, i){
         var sClass = '.slide'+i;
         g.selectAll(sClass).filter('.quote,.arrow')
@@ -159,7 +162,8 @@ var scrollVis = function () {
           .transition()
           .duration(200)
           .style('opacity', 1);})
-      .attr('width', 30)
+      // .attr('width', 12)
+      .attr('width', 140)
       .style('opacity', 0);
 
 
@@ -248,7 +252,6 @@ var scrollVis = function () {
         // dy = parseFloat(text.attr("dy")),
         dy = 0,
         tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
-    console.log(words)
     while (word = words.pop()) {
       line.push(word);
       tspan.text(line.join(" "));

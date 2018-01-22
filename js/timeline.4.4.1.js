@@ -97,10 +97,10 @@ function getSum(total, num) {
 // main timeline
 var mainTL = d3.select("#sections")
   .append("svg")
-  .attr("width", mainWidth+miniWidth)
+  .attr("width", mainWidth+miniWidth+40)
   .attr("height", mainHeight+mTop+m)
   .append("g")
-  .attr("transform", "translate(" + (miniWidth+mLeft+m+8) + "," + mTop + ")") // position mainTL
+  .attr("transform", "translate(" + (miniWidth+mLeft+m+40) + "," + mTop + ")") // position mainTL
   .attr("height", mainHeight)
   .attr("width", mainWidth);
 
@@ -155,7 +155,7 @@ miniTL.append("rect")
   .attr("width", .75*x2(1))
   // height edited to match limit of miniBox slider
   // .attr("height", (miniHeight-16))
-  .attr("height", (miniHeight-gispEnd))
+  .attr("height", (miniHeight-gispEnd-y2(-200000)))
   .attr("fill", "#966b51")
   .style("opacity", 0.3);
 
@@ -246,6 +246,7 @@ d3.tsv("web_timeline.4.4.tsv", function(items) {
     .attr("width", .75*x2(1))
     .attr("height", function(d) {return y2(d.start)-y2(d.end)});
 
+  // miniLocator with year ticker
   var miniLocator = miniTL.append("g")
     .attr("id", "miniLocator")
     .attr("width", miniHeight+2*m)
