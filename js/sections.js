@@ -78,7 +78,7 @@ var scrollVis = function () {
       .data(img_slides)
       .enter()
       .append('svg:a')
-        .attr('xlink:href', function(d,i) {return 'images/'+lBox_names[i]+'.jpg'})
+        .attr('xlink:href', function(d,i) {return 'https://raw.githubusercontent.com/andreschang/arctic_timeline.4.4/master/images/'+lBox_names[i]+'.jpg'})
         .attr('data-lightbox', function(d,i) {return 'image #'+i})
         .attr('data-title', function(d,i) {return timelineData[d].imgName+'<br>'+timelineData[d].imgSource})
       .append('svg:image')
@@ -168,7 +168,7 @@ var scrollVis = function () {
       .enter()
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+i+' arrow'})
-      .attr('xlink:href', '../images/Read-More5.svg')
+      .attr('xlink:href', 'https://raw.githubusercontent.com/andreschang/arctic_timeline.4.4/master/images/Read-More5.svg')
       .attr('x', function(d, i) {return arrow_x[i]-11})
       .attr('y', function(d, i) {return arrow_y[i]+1})
       .on("click", function(d, i){
@@ -192,7 +192,7 @@ var scrollVis = function () {
       .enter()
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+d+' fReadArrow fR'})
-      .attr('xlink:href', '../images/Further-Reading2.svg')
+      .attr('xlink:href', 'https://raw.githubusercontent.com/andreschang/arctic_timeline.4.4/master/images/Further-Reading2.svg')
       .attr('x', -4)
       .attr('y', function(d, i) {return fRead_y[i]+1})
       .on("click", function(d, i){
@@ -371,5 +371,5 @@ function display(data) {
 }
 
 // load data and display
-d3.tsv('web_timeline.4.5.tsv', display);
+d3.tsv('https://raw.githubusercontent.com/andreschang/arctic_timeline.4.4/master/web_timeline.4.5.tsv', display);
 
