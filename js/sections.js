@@ -278,7 +278,7 @@ var scrollVis = function () {
           .attr('transform', function(d,i) {
             var img_h = d3.select(this).node().getBBox().height,
             offset = (height-img_y[i]-img_h/2)/(height);
-            console.log((-4*Math.pow((progress-offset),3)));
+            // console.log((-4*Math.pow((progress-offset),3)));
             return 'translate(0,'+(-4*Math.pow((progress-offset),3))*(height+img_h)+')'}
           )}
     }};
