@@ -86,18 +86,25 @@
   /*text-anchor: middle;*/
 }
 
-#vis .desc {
+
+#vis .desc{
   font-family: 'ProximaNova-Regular', sans-serif;
   font-size:1.15em;
-  line-height: 1.4em;
+  line-height: 1.2em;
   text-anchor: left;
+}
+
+#vis h1 {
+  font-family: 'ProximaNova-Medium', sans-serif;
+  font-size:1.3em;
+  line-height: 1.4em;
 }
 
 #vis .quote {
   /*font-family: 'Lato', sans-serif;*/
   font-family: 'ProximaNova-MediumIt', sans-serif;
   font-size:1.7em;
-  line-height: 1.4em;
+  line-height: 1.2em;
   text-anchor: left;
 }
 

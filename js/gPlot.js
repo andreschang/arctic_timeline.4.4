@@ -6,12 +6,12 @@ var margin = { top: 0, left: 10, bottom: 40, right: 10 };
 
 // gPlot variables
 var parseTime = d3.timeParse("%Y-%m-%d");
-var widthG = 500,
-  heightG = 400;
+var x0G = 200,
+  y0G = 300;
 var xG = d3.scaleTime()
-    .rangeRound([0, widthG]);
+    .rangeRound([0, width-x0G]);
 var yG = d3.scaleLinear()
-    .rangeRound([heightG, 0]);
+    .rangeRound([height-y0G, 0]);
 
 // append SVG
 var gPlot = d3.select('#vis')
@@ -22,7 +22,8 @@ var gPlot = d3.select('#vis')
 gPlot.append("g")
 
 gP = gPlot.select('g')
-  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')');
+  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+  .attr('class', 'slide1');
 
 // Greenland Plot  
 var line = d3.line()
@@ -40,7 +41,7 @@ d3.csv('greenland_mass_date.csv', function(d){
     yG.domain(d3.extent(data, function(d) { return d.mass; }));
 
     linePlot = gP.append("g")
-      .attr("transform", "translate("+(width-widthG)+","+(height-heightG-80)+")")
+      .attr("transform", "translate("+(x0G)+","+(y0G)+")")
       // .attr("class", "slide1 slide2");
 
     linePlot.call(d3.axisBottom(xG))
@@ -60,7 +61,7 @@ d3.csv('greenland_mass_date.csv', function(d){
       .attr("stroke", "steelblue")
       .attr("stroke-linejoin", "round")
       .attr("stroke-linecap", "round")
-      .attr("stroke-width", 2)
+      .attr("stroke-width", 3)
       .attr("d", line);
 
   });

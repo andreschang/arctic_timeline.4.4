@@ -60,22 +60,27 @@ var scrollVis = function () {
 
   var setupVis = function (timelineData) {
 
-    var img_slides = [2,3,4,6,8,10,12,13,15],
-      img_names = ['shuvinai', 'gisp2_crop', 'northpole2', 'church', 'woodmap',
-      'bruegel', 'hyperborea', 'mask2', 'lgm'],
-      img_x = [270, 400, 340, 228, 370, 240, 240, 380, 300],
-      img_y = [120, 100, 120, 126, 50, 30, 60, 43, 60],
-      arrow_x = [100, 68, 290, 194, 348, 184, 2, 2, 2, 2, 252, 2, 
-      338, 142, 150, 2, 110, 2, 172],
-      arrow_y = [400, 303, 393, 303, 333, 333, 333, 363, 333, 363, 333, 333, 
-      363, 363, 363, 363, 363, 303, 423];
+    var img_slides = [1, 2, 3, 4, 6, 8, 10, 12, 13, 15, 18],
+      img_names = ['iceloss_crop', 'shuvinai', 'gisp2_crop', 'northpole2', 'church', 'woodmap',
+      'bruegel', 'hyperborea', 'mask2', 'lgm', 'dirtyice'],
+      lBox_names = ['iceloss2', 'shuvinai', 'gisp2_crop', 'northpole2', 'church', 'woodmap',
+      'bruegel', 'hyperborea', 'mask2', 'lgm', 'dirtyice'],
+      img_x = [325, 270, 400, 340, 228, 370, 240, 240, 380, 300, 350],
+      img_y = [100, 120, 100, 120, 126, 50, 30, 60, 43, 60, 40],
+      arrow_x = [100, 68, 165, 191, 298, 182, 2, 2, 2, 2, 250, 2, 
+      335, 142, 146, 2, 107, 2, 2, 86],
+      arrow_y = [430, 311, 407, 311, 343, 343, 343, 375, 343, 375, 343, 343, 
+      375, 375, 375, 375, 375, 311, 407, 439],
+      fRead = [1,5,9,14,15,19],
+      fRead_y = [510, 530, 530, 400, 510, 488];
 
     g.append('g').selectAll('img')
       .data(img_slides)
       .enter()
       .append('svg:a')
-        .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
+        .attr('xlink:href', function(d,i) {return 'images/'+lBox_names[i]+'.jpg'})
         .attr('data-lightbox', function(d,i) {return 'image #'+i})
+        .attr('data-title', function(d,i) {return timelineData[d].imgName+'<br>'+timelineData[d].imgSource})
       .append('svg:image')
       .attr('class', function(d, i) {return 'slide'+img_slides[i]+' img'})
       .attr('xlink:href', function(d,i) {return 'images/'+img_names[i]+'.jpg'})
@@ -122,27 +127,41 @@ var scrollVis = function () {
       .call(wrap, 400)
       .style('opacity', 0);
 
+    g.append('g').selectAll('fRead')
+      .data(timelineData)
+      .enter()
+      .append('foreignObject')
+        .attr('y', (height / 2.42))
+        .attr("width", 500)
+        .attr("height", 300)
+        .attr('class', function(d, i) {return 'slide'+i+' fRead fR'})
+        .style('opacity', 0)
+      .append('xhtml:div')
+        .html(function(d) {return "<h1>Further Reading</h1>"+d.furtherReading});
+
     g.append('g').selectAll('desc')
       .data(timelineData)
       .enter()
-      .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' desc'})
-      .attr('y',  (height / 2))
-      .attr('x', width / 5)
-      .text(function(d) {return d.desc})
-      .call(wrap, 500)
-      .style('opacity', 0);
+      .append('foreignObject')
+        .attr('y', (height / 2.42))
+        .attr("width", 510)
+        .attr("height", 300)
+        .attr('class', function(d, i) {return 'slide'+i+' desc'})
+        .style('opacity', 0)
+      .append('xhtml:div')
+        .html(function(d) {return d.desc});
 
     g.append('g').selectAll('quote')
       .data(timelineData)
       .enter()
-      .append('text')
-      .attr('class', function(d, i) {return 'slide'+i+' quote'})
-      .attr('y',  (height / 2))
-      .attr('x', width / 5)
-      .text(function(d) {return d.quote})
-      .call(wrap, 500)
-      .style('opacity', 0);
+      .append('foreignObject')
+        .attr('y', (height / 2.42))
+        .attr("width", 510)
+        .attr("height", 300)
+        .attr('class', function(d, i) {return 'slide'+i+' quote'})
+        .style('opacity', 0)
+      .append('xhtml:div')
+        .html(function(d) {return '<p>'+d.quote+"</p>"});
 
     g.append('g').selectAll('arrows')
       .data(timelineData)
@@ -157,8 +176,33 @@ var scrollVis = function () {
         g.selectAll(sClass).filter('.quote,.arrow')
           .transition()
           .duration(0)
+          .attr('pointer-events', 'none')
           .style('opacity', 0);
-        g.selectAll(sClass).filter('.desc')
+        g.selectAll(sClass).filter('.desc,.fReadArrow')
+          .transition()
+          .duration(200)
+          .attr('pointer-events', 'all')
+          .style('opacity', 1);})
+      // .attr('width', 12)
+      .attr('width', 140)
+      .style('opacity', 0);
+
+    g.append('g').selectAll('fReadArrows')
+      .data(fRead)
+      .enter()
+      .append('svg:image')
+      .attr('class', function(d, i) {return 'slide'+d+' fReadArrow fR'})
+      .attr('xlink:href', '../images/Further-Reading2.svg')
+      .attr('x', -4)
+      .attr('y', function(d, i) {return fRead_y[i]+1})
+      .on("click", function(d, i){
+        var sClass = '.slide'+d;
+        g.selectAll(sClass).filter('.desc,.fReadArrow')
+          .transition()
+          .duration(0)
+          .attr('pointer-events', 'none')
+          .style('opacity', 0);
+        g.selectAll(sClass).filter('.fRead')
           .transition()
           .duration(200)
           .style('opacity', 1);})
@@ -181,7 +225,7 @@ var scrollVis = function () {
 
   var setupSections = function() {
 
-    for (var i = 0; i < 20; ++i){
+    for (var i = 0; i < 21; ++i){
 
       activateFunctions[i] = getFun(i);
       updateFunctions[i] = getUp(i)};
@@ -204,7 +248,7 @@ var scrollVis = function () {
         g.selectAll(':not(.slide'+val+')')
           .attr('pointer-events', 'none');
 
-        g.selectAll('.slide'+val).filter(':not(.desc)')
+        g.selectAll('.slide'+val).filter(':not(.desc)').filter(':not(.fR)')
           .transition()
           .duration(600)
           .style('opacity', 1.0);
@@ -215,7 +259,7 @@ var scrollVis = function () {
           .duration(600)
           .style('opacity', 0.4);
 
-        g.selectAll('.slide'+val).filter('.arrow')
+        g.selectAll('.slide'+val).filter('.arrow,.quote')
           .attr('pointer-events', 'all')
           .transition()
           .duration(600)
@@ -327,5 +371,5 @@ function display(data) {
 }
 
 // load data and display
-d3.tsv('web_timeline.4.4.tsv', display);
+d3.tsv('web_timeline.4.5.tsv', display);
 
