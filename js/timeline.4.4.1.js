@@ -106,9 +106,16 @@ var mainTL = d3.select("#sections")
 
 mainTL.append("rect")
   .attr("x", .12*x1(1))
-  .attr("width", function(d) {return .75*x1(1)})
+  .attr("width", .75*x1(1))
   .attr("height", mainHeight)
   .attr("fill", "#edf1f2");
+
+// mainTL.append("rect")
+//   .attr("x", .1*x1(1))
+//   .attr("y", multiScale(1993))
+//   .attr("width", .02*x1(1))
+//   .attr("height", (multiScale(-273000)-multiScale(1993)))
+//   .attr("fill", "#f6a355");
 
 // BUILD EACH Y-SCALE
 var axis0 = d3.axisLeft(scale0)

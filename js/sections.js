@@ -60,11 +60,11 @@ var scrollVis = function () {
 
   var setupVis = function (timelineData) {
 
-    var img_slides = [2,3,4,6,8,10,12],
-      img_names = ['shuvinai', 'gisp2_crop', 'northpole', 'church', 'woodmap',
-      'bruegel', 'hyperborea'],
-      img_x = [270, 400, 340, 228, 370, 240, 240],
-      img_y = [120, 100, 120, 126, 50, 90, 120],
+    var img_slides = [2,3,4,6,8,10,12,13,15],
+      img_names = ['shuvinai', 'gisp2_crop', 'northpole2', 'church', 'woodmap',
+      'bruegel', 'hyperborea', 'mask2', 'lgm'],
+      img_x = [270, 400, 340, 228, 370, 240, 240, 380, 300],
+      img_y = [120, 100, 120, 126, 50, 30, 60, 43, 60],
       arrow_x = [100, 68, 290, 194, 348, 184, 2, 2, 2, 2, 252, 2, 
       338, 142, 150, 2, 110, 2, 172],
       arrow_y = [400, 303, 393, 303, 333, 333, 333, 363, 333, 363, 333, 333, 
@@ -95,7 +95,7 @@ var scrollVis = function () {
       // .attr('y', (height / 10.8))
       .attr('x', 6)
       .text(function(d) {
-        var depth = d.depthm > 0.0 ? '-'+d.depthm+' meters / -'+d.depthmi+' miles' : '';
+        var depth = d.depthm <= 0.0 ? d.depthm+' meters / '+d.depthmi+' miles' : '';
         return depth})
       .style('opacity', 0);
 
